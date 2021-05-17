@@ -11,11 +11,11 @@ function toggleCollapse(button, text) {
 }
 
 function modifyEmotionSize() {
-    var acEmotions = document.getElementsByClassName("emoticon")
+/*    var acEmotions = document.getElementsByClassName("emoticon")
     if (acEmotions != null && acEmotions.length > 0) {
         var size = window.action.getEmotionSize();
         for (let i = 0; i < acEmotions.length; i++) {
             acEmotions[i].style.width = size;
         }
-    }
+    }*/
 }
