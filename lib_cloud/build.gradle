@@ -33,7 +33,7 @@ dependencies {
 
     implementation 'com.tencent.bugly:crashreport:3.1.9'
 
-    implementation 'com.umeng.umsdk:analytics:8.1.6'
-    implementation 'com.umeng.umsdk:common:2.2.5'
+//    implementation 'com.umeng.umsdk:analytics:8.1.6'
+//    implementation 'com.umeng.umsdk:common:2.2.5'
 
 }

@@ -1,13 +1,12 @@
 buildscript {
     ext.kotlin_version = '1.3.72'
     repositories {
+        mavenCentral()
+        google()
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
         maven { url 'http://oss.sonatype.org/content/repositories/snapshots' }
         maven { url "https://jitpack.io" }
-        maven { url 'https://dl.bintray.com/umsdk/release' }
-        mavenCentral()
-        google()
-        jcenter()
+//        maven { url 'https://dl.bintray.com/umsdk/release' }
         maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
     }
     dependencies {
@@ -18,10 +17,14 @@ buildscript {
 
 allprojects {
     repositories {
+        mavenCentral()
         google()
-        jcenter()
         maven { url "https://jitpack.io" }
-        maven { url 'https://dl.bintray.com/umsdk/release' }
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven{
+            url "https://raw.github.com/bmob/bmob-android-sdk/master"
+        }
+//        maven { url 'https://dl.bintray.com/umsdk/release' }
         flatDir {
             dirs 'libs'
         }
