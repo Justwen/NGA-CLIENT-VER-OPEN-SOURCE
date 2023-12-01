@@ -2,6 +2,7 @@ package gov.anzong.androidnga.activity;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -53,6 +54,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (mSwipeBackHelper != null) {
             mSwipeBackHelper.onCreate(this);
         }
+
+        // Set Transparent as the default color to match the theme
+        getWindow().setNavigationBarColor(Color.TRANSPARENT);
 
         try {
             if (ThemeManager.getInstance().isNightMode()) {
