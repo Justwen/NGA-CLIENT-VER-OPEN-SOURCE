@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.7.20'
+    ext.kotlin_version = '1.9.23'
     repositories {
         maven { url 'https://maven.aliyun.com/repository/google' }
         maven { url 'https://maven.aliyun.com/repository/central' }
@@ -35,15 +35,15 @@ project.ext {
     appVersionName = '4.0.2'
     appVersionCode = 4002
 
-    fastJson = '1.1.71.android'
+    fastJson = '2.0.49'
     rxAndroid = '2.1.1'
 
-    lifecycle_version = "2.2.0"
+    lifecycle_version = "2.7.0"
 
-    androidxAppcompat = '1.2.0-alpha03'
-    androidxMaterial = '1.2.0'
+    androidxAppcompat = '1.6.1'
+    androidxMaterial = '1.11.0'
 
-    room_version = "2.4.1"
+    room_version = "2.6.1"
 
-    preference_version = "1.1.1"
+    preference_version = "1.2.1"
 }
