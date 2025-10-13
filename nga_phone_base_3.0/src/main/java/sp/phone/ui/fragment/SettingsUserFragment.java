@@ -62,9 +62,7 @@ public class SettingsUserFragment extends BaseFragment implements View.OnClickLi
 
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                mUserManager.swapUser(viewHolder.getAdapterPosition(), target.getAdapterPosition());
-                mListAdapter.notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
-                return true;
+                return false;
             }
 
             @Override
