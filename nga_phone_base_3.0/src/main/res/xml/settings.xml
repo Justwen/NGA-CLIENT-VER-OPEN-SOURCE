@@ -12,8 +12,8 @@
             android:title="@string/setting_nga_domain" />
 
         <PreferenceScreen
-            android:fragment="sp.phone.ui.fragment.SettingsUserFragment"
-            android:key="pref_user"
+            android:fragment="com.justwent.androidnga.bu.user.UserManagerFragment"
+            android:key="pref_user_compose"
             android:title="@string/setting_title_user" />
 
 

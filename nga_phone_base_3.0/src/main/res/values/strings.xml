@@ -341,7 +341,7 @@
     <string name="summary_show_with_webview">加载出错时默认使用内置浏览器打开</string>
     <string name="title_show_with_webview">使用内置浏览器打开</string>
     <string name="setting_title_sort_by_post">按发帖顺序排序</string>
-    <string name="setting_title_user">用户管理</string>
+    <string name="setting_title_user">账号管理</string>
     <string name="setting_title_black_list">黑名单</string>
     <string name="setting_title_filter_sub_board">过滤版主固定的渣帖子</string>
     <string name="setting_nga_domain">NGA域名</string>

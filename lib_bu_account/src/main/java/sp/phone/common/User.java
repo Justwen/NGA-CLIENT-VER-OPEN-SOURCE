@@ -92,4 +92,8 @@ public class User implements JavaBean {
                 ", mAvatarUrl='" + mAvatarUrl + '\'' +
                 '}';
     }
+
+    public String toShortString() {
+        return mUserId + '/' + mNickName;
+    }
 }

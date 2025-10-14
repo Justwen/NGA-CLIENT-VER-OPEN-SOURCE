@@ -14,5 +14,7 @@ class ARouterConstants {
 
         const val ACTIVITY_LOGIN = "/account/login"
 
+        const val ACTIVITY_PROFILE: String = "/activity/profile"
+
     }
 }

@@ -20,7 +20,7 @@ object UserManager {
         AppDatabase.getInstance().userDao().loadUser()?.let {
             userListLiveData.postValue(it)
             if (it.isNotEmpty()) {
-                if (index >= it.size) {
+                if (index >= it.size || index < 0) {
                     index = 0
                 }
                 activeIndexLiveData.postValue(index)
@@ -103,13 +103,23 @@ object UserManager {
 
     fun removeUser(index: Int) {
         val userList = userListLiveData.value!!.toMutableList()
-        val user = userList[index]
+        val user = userList.removeAt(index)
         var activeIndex = activeIndexLiveData.value!!
         if (activeIndex >= index) {
             activeIndex -= 1
+        }
+
+        if (activeIndex >= userList.size || activeIndex < 0) {
+            activeIndex = 0
+        }
+        if (userList.isEmpty()) {
+            activeUser = null
+            activeIndex = 0
+            activeIndexLiveData.value = 0
+            PreferenceUtils.putData(PreferenceKey.USER_ACTIVE_INDEX, activeIndex)
+        } else {
             setActiveIndex(activeIndex)
         }
-        userList.removeAt(index)
         userListLiveData.value = userList
         ThreadProvider.runOnSingleThread {
             AppDatabase.getInstance().userDao().removeUsers(user)
