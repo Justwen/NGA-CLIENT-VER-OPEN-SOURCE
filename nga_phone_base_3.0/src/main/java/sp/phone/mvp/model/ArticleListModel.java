@@ -104,7 +104,6 @@ public class ArticleListModel extends BaseModel implements ArticleListContract.M
                     @Override
                     public void onNext(@NonNull ThreadData threadData) {
                         callBack.onSuccess(threadData);
-                        UserManagerImpl.getInstance().putAvatarUrl(threadData);
                     }
 
                     @Override

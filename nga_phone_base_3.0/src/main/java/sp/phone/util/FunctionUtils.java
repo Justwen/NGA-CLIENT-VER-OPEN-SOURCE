@@ -91,74 +91,6 @@ public class FunctionUtils {
         }
     }
 
-    @SuppressWarnings("static-access")
-    public static void handleContentTV(final WebView contentTV, final MessageArticlePageInfo row, int bgColor, int fgColor, Context context) {
-        final WebViewClient client = new WebViewClientEx((FragmentActivity) context);
-        contentTV.setBackgroundColor(0);
-        contentTV.setFocusableInTouchMode(false);
-        contentTV.setFocusable(false);
-        contentTV.setLongClickable(false);
-
-
-        WebSettings setting = contentTV.getSettings();
-        setting.setUserAgentString(context.getString(R.string.clientua) + BuildConfig.VERSION_CODE);
-        setting.setDefaultFontSize(PhoneConfiguration.getInstance()
-                .getWebSize());
-        setting.setJavaScriptEnabled(false);
-        contentTV.setWebViewClient(client);
-
-        contentTV.setTag(row.getLou());
-        contentTV.loadDataWithBaseURL(null, row.getFormated_html_data(),
-                "text/html", "utf-8", null);
-    }
-
-
-    public static void errordialogadmin(Context context, final View listView) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage("这白痴是系统账号,神马都看不到");
-        builder.setTitle("看不到");
-        builder.setPositiveButton("关闭", new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // TODO Auto-generated method stub
-                dialog.dismiss();
-            }
-
-        });
-
-        final AlertDialog dialog = builder.create();
-        dialog.show();
-        dialog.setOnDismissListener(new AlertDialog.OnDismissListener() {
-
-            @Override
-            public void onDismiss(DialogInterface arg0) {
-                // TODO Auto-generated method stub
-                dialog.dismiss();
-            }
-
-        });
-    }
-
-    public static String signatureToHtmlText_Message(final MessageArticlePageInfo row,
-                                                     boolean showImage, int imageQuality, final String fgColorStr,
-                                                     final String bgcolorStr, Context context) {
-        initStaticStrings(context);
-        String ngaHtml = StringUtils.decodeForumTag(row.getSignature(),
-                showImage, imageQuality, null);
-        if (StringUtils.isEmpty(ngaHtml)) {
-            ngaHtml = "<font color='red'>[" + context.getString(R.string.hide)
-                    + "]</font>";
-        }
-        ngaHtml = "<HTML> <HEAD><META   http-equiv=Content-Type   content= \"text/html;   charset=utf-8 \">"
-                + "<body bgcolor= '#"
-                + bgcolorStr
-                + "'>"
-                + "<font color='#"
-                + fgColorStr + "' size='2'>" + ngaHtml + "</font></body>";
-
-        return ngaHtml;
-    }
 
     public static void Create_Signature_Dialog(ThreadRowInfo row, final Context context, final View scrollview) {
         LayoutInflater layoutInflater = ((Activity) context).getLayoutInflater();
@@ -195,7 +127,7 @@ public class FunctionUtils {
                 .loadDataWithBaseURL(
                         null,
                         FunctionUtils.signatureToHtmlText(row, showImage,
-                                ArticleUtil.showImageQuality(), fgColorStr,
+                                0, fgColorStr,
                                 bgcolorStr, context), "text/html", "utf-8", null);
         alert.setPositiveButton("关闭", new DialogInterface.OnClickListener() {
             @Override
@@ -336,7 +268,7 @@ public class FunctionUtils {
         contentTV.setWebViewClient(client);
         contentTV.loadDataWithBaseURL(
                 null,
-                FunctionUtils.VoteToHtmlText(row, showImage, ArticleUtil.showImageQuality(),
+                FunctionUtils.VoteToHtmlText(row, showImage, 0,
                         fgColorStr, bgcolorStr), "text/html", "utf-8", null);
         contentTV.requestLayout();
         alert.setPositiveButton("关闭", new DialogInterface.OnClickListener() {
@@ -355,26 +287,6 @@ public class FunctionUtils {
                 dialog.dismiss();
             }
         });
-    }
-
-    public static void handleNickName(MessageArticlePageInfo row, int fgColor,
-                                      TextView nickNameTV, Context context) {
-        initStaticStrings(context);
-        String nickName = row.getAuthor();
-        // int now = 0;
-        if ("-1".equals(row.getYz()))// nuked
-        {
-            fgColor = nickNameTV.getResources().getColor(R.color.title_red);
-            nickName += "(VIP)";
-        } else if (!StringUtils.isEmpty(row.getMute_time())
-                && !"0".equals(row.getMute_time())) {
-            fgColor = nickNameTV.getResources().getColor(R.color.title_orange);
-            nickName += "(" + legend + ")";
-        }
-        nickNameTV.setText(nickName);
-        TextPaint tp = nickNameTV.getPaint();
-        tp.setFakeBoldText(true);// bold for Chinese character
-        nickNameTV.setTextColor(fgColor);
     }
 
 
@@ -411,38 +323,6 @@ public class FunctionUtils {
         nickNameTV.setTextColor(fgColor);
     }
 
-    public static void fillFormatedHtmlData(ThreadRowInfo row, int i, Context context) {
-        ThemeManager theme = ThemeManager.getInstance();
-        if (row.getContent() == null) {
-            row.setContent(row.getSubject());
-            row.setSubject(null);
-        }
-        if (!StringUtils.isEmpty(row.getFromClient())) {
-            if (row.getFromClient().startsWith("103 ") && !StringUtils.isEmpty(row.getContent())) {
-                row.setContent(StringUtils.unescape(row.getContent()));
-            }
-        }
-        int fgColor = theme.getWebTextColor();
-
-        int htmlfgColor = fgColor & 0xffffff;
-        final String fgColorStr = String.format("%06x", htmlfgColor);
-
-        String formated_html_data = HtmlUtils.convertToHtmlText(row, isShowImage(), showImageQuality(), fgColorStr, context);
-        row.setFormattedHtmlData(formated_html_data);
-    }
-
-    public static boolean isShowImage() {
-        return PhoneConfiguration.getInstance().isImageLoadEnabled();
-    }
-
-    public static int showImageQuality() {
-        return 0;
-//        if (NetUtil.getInstance().isInWifi()) {
-//            return 0;
-//        } else {
-//            return PhoneConfiguration.getInstance().imageQuality;
-//        }
-    }
 
     public static String signatureToHtmlText(final ThreadRowInfo row,
                                              boolean showImage, int imageQuality, final String fgColorStr,
@@ -504,68 +384,6 @@ public class FunctionUtils {
         return ret;
     }
 
-//	public static String findimgonphone(String avatarlocalurl){
-//		
-//	}
-
-    public static String avatarToHtmlText_Message(final MessageArticlePageInfo row, boolean showImage,
-                                                  int imageQuality, final String fgColorStr, final String bgcolorStr, Context context) {
-        String ngaHtml = null;
-        initStaticStrings(context);
-        if (row.getJs_escap_avatar().equals("")) {
-            ngaHtml = StringUtils
-                    .decodeForumTag(
-                            "这家伙是骷髅党,头像什么的没有啦~<br/><img src='file:///android_asset/default_avatar.png' style= 'max-width:100%;' >",
-                            showImage, imageQuality, null);
-        } else {
-            ngaHtml = StringUtils.decodeForumTag(
-                    "[img]" + parseAvatarUrl(row.getJs_escap_avatar())
-                            + "[/img]", showImage, imageQuality, null);
-        }
-        if (StringUtils.isEmpty(ngaHtml)) {
-            ngaHtml = "<font color='red'>[" + context.getString(R.string.hide)
-                    + "]</font>";
-        }
-        ngaHtml = "<HTML> <HEAD><META   http-equiv=Content-Type   content= \"text/html;   charset=utf-8 \">"
-                + "<body bgcolor= '#"
-                + bgcolorStr
-                + "'>"
-                + "<font color='#"
-                + fgColorStr + "' size='2'>" + ngaHtml + "</font></body>";
-
-        return ngaHtml;
-    }
-
-    public static String avatarToHtmlText(final ThreadRowInfo row, boolean showImage,
-                                          int imageQuality, final String fgColorStr, final String bgcolorStr, Context context) {
-        String ngaHtml = null;
-        initStaticStrings(context);
-        if (row.getJs_escap_avatar().equals("")) {
-            ngaHtml = StringUtils
-                    .decodeForumTag(
-                            "这家伙是骷髅党,头像什么的没有啦~<br/><img src='file:///android_asset/default_avatar.png' style= 'max-width:100%;' >",
-                            showImage, imageQuality, null);
-        } else {
-            ngaHtml = StringUtils.decodeForumTag(
-                    "[img]" + parseAvatarUrl(row.getJs_escap_avatar())
-                            + "[/img]", showImage, imageQuality, null);
-        }
-        if (StringUtils.isEmpty(ngaHtml)) {
-            ngaHtml = row.getAlterinfo();
-        }
-        if (StringUtils.isEmpty(ngaHtml)) {
-            ngaHtml = "<font color='red'>[" + context.getString(R.string.hide)
-                    + "]</font>";
-        }
-        ngaHtml = "<HTML> <HEAD><META   http-equiv=Content-Type   content= \"text/html;   charset=utf-8 \">"
-                + "<body bgcolor= '#"
-                + bgcolorStr
-                + "'>"
-                + "<font color='#"
-                + fgColorStr + "' size='2'>" + ngaHtml + "</font></body>";
-
-        return ngaHtml;
-    }
 
     public static boolean isComment(ThreadRowInfo row) {
 
@@ -798,10 +616,8 @@ public class FunctionUtils {
 
     public static String getPath(final Context context, final Uri uri) {
 
-        final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
-
         // DocumentProvider
-        if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
+        if (DocumentsContract.isDocumentUri(context, uri)) {
             // ExternalStorageProvider
             if (isExternalStorageDocument(uri)) {
                 final String docId = DocumentsContract.getDocumentId(uri);
@@ -893,25 +709,6 @@ public class FunctionUtils {
     public static boolean isMediaDocument(Uri uri) {
         return "com.android.providers.media.documents".equals(uri
                 .getAuthority());
-    }
-
-    public static String getngaClientChecksum(Context context) {
-        String str = null;
-        String secret = context
-                .getString(R.string.checksecret);
-        try {
-            str = MD5Util.MD5(new StringBuilder(String
-                    .valueOf(UserManagerImpl.getInstance().getUserId()))
-                    .append(secret).append(System.currentTimeMillis() / 1000L)
-                    .toString())
-                    + System.currentTimeMillis() / 1000L;
-            return str;
-        } catch (Exception localException) {
-            while (true)
-                str = MD5Util.MD5(new StringBuilder(secret).append(
-                        System.currentTimeMillis() / 1000L).toString())
-                        + System.currentTimeMillis() / 1000L;
-        }
     }
 
 }

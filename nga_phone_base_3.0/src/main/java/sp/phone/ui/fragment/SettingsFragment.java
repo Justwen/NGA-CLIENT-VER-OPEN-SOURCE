@@ -122,7 +122,7 @@ public class SettingsFragment extends BasePreferenceFragment implements Preferen
     @Override
     public boolean onPreferenceTreeClick(Preference preference) {
         Intent intent;
-        if (preference.getFragment() != null && (preference.getFragment().contains("compose") || preference.getKey().contains("compose"))) {
+        if (preference.getFragment() != null && (preference.getFragment().contains("compose") || preference.getKey() != null && preference.getKey().contains("compose"))) {
             intent = new Intent(getActivity(), TemplateComposeActivity.class);
             intent.putExtra("fragment", preference.getFragment());
             startActivity(intent);

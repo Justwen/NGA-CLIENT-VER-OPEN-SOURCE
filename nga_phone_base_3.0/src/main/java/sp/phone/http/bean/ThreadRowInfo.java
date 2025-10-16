@@ -11,44 +11,46 @@ import gov.anzong.androidnga.common.base.JavaBean;
  */
 public class ThreadRowInfo implements JavaBean {
 
-    private int tid;
-    private int fid;
-    private String author;//user name
-    private int authorid;
-    private String subject;
-    private String vote;
-    private String postdate;
-    private int pid;
-    private boolean isanonymous = false;
-    private String alterinfo;// something like "edited by ..."
-    private String content;
-    private int lou;
-    private Map<String, Attachment> attachs;
-    private String level;
-    private String yz; //negative integer if user is nuked
-    private String js_escap_avatar;//avatar url
-    private String muteTime;
-    private int aurvrc;//prestige
-    private String signature;
-    private List<ThreadRowInfo> comments;
+    public int tid;
+    public int fid;
+    public String author;//user name
+    public int authorid;
+    public String subject;
+    public String vote;
+    public String postdate;
+    public int pid;
+    public boolean isanonymous = false;
+    public String alterinfo;// something like "edited by ..."
+    public String content;
+    public int lou;
+    public Map<String, Attachment> attachs;
+    public String level;
+    public String yz; //negative integer if user is nuked
+    public String js_escap_avatar;//avatar url
+    public String muteTime;
+    public int aurvrc;//prestige
+    public String signature;
+    public List<ThreadRowInfo> comments;
     public List<String> hotReplies; //热门回复
 
-    private boolean isInBlackList;
+    public boolean isInBlackList;
 
-    private String mFormattedHtmlData;
+    public String mFormattedHtmlData;
 
-    private String from_client;
-    private String from_client_model;
+    public String from_client;
+    public String from_client_model;
 
-    private boolean mMuted;
+    public boolean mMuted;
 
-    private String mPostCount;
+    public String mPostCount;
 
-    private float mReputation;
+    public float mReputation;
 
-    private String mMemberGroup;
+    public String mMemberGroup;
 
-    private List<String> mImageUrlList = new ArrayList<>();
+    public List<String> mImageUrlList = new ArrayList<>();
+
+    public int score;
 
     public void addImageUrl(String url) {
         mImageUrlList.add(url);
@@ -66,16 +68,6 @@ public class ThreadRowInfo implements JavaBean {
         this.score = score;
     }
 
-    public int getScore_2() {
-        return score_2;
-    }
-
-    public void setScore_2(int score_2) {
-        this.score_2 = score_2;
-    }
-
-    private int score;
-    private int score_2;
 
     public void set_IsInBlackList(boolean isin) {
         this.isInBlackList = isin;

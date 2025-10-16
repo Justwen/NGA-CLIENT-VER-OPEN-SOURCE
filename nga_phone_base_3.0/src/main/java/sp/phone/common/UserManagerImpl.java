@@ -2,23 +2,15 @@ package sp.phone.common;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.text.TextUtils;
 
 import androidx.annotation.Nullable;
 
-import com.alibaba.fastjson.JSON;
+import com.justwent.androidnga.bu.UserManager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import gov.anzong.androidnga.activity.compose.filter.FilterManager;
 import gov.anzong.androidnga.common.PreferenceKey;
-
-import com.justwent.androidnga.bu.UserManager;
-
-import sp.phone.http.bean.ThreadData;
-import sp.phone.http.bean.ThreadRowInfo;
 
 
 public class UserManagerImpl implements sp.phone.common.UserManager {
@@ -172,34 +164,9 @@ public class UserManagerImpl implements sp.phone.common.UserManager {
         return FilterManager.INSTANCE.filterUserById(authorId);
     }
 
-
-    @Override
-    public void putAvatarUrl(String uid, String url) {
-        if (!TextUtils.isEmpty(url)) {
-            mAvatarPreferences.edit().putString(uid, url).apply();
-        }
-    }
-
-    @Override
-    public void putAvatarUrl(ThreadData info) {
-        if (info.getRowList() == null) {
-            return;
-        }
-        SharedPreferences.Editor editor = mAvatarPreferences.edit();
-        for (ThreadRowInfo rowInfo : info.getRowList()) {
-            String uid = String.valueOf(rowInfo.getAuthorid());
-            String url = rowInfo.getJs_escap_avatar();
-            if (!TextUtils.isEmpty(uid) && !uid.equals("0") && !TextUtils.isEmpty(url)) {
-                editor.putString(uid, url);
-                setAvatarUrl(Integer.parseInt(uid), url);
-            }
-        }
-        editor.apply();
-    }
-
     @Override
     public String getAvatarUrl(String uid) {
-        return TextUtils.isEmpty(uid) || uid.equals("0") ? "" : mAvatarPreferences.getString(uid, "");
+        return ""; //TextUtils.isEmpty(uid) || uid.equals("0") ? "" : mAvatarPreferences.getString(uid, "");
     }
 
     @Override

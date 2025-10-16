@@ -9,7 +9,6 @@ import sp.phone.mvp.model.entity.ThreadPageInfo;
 public class ThreadData implements JavaBean {
     private List<ThreadRowInfo> rowList;
     private ThreadPageInfo threadInfo;
-    private Map<String, String> __F;
     private int __ROWS;
     private int rowNum;
 
@@ -32,14 +31,6 @@ public class ThreadData implements JavaBean {
 
     public void setThreadInfo(ThreadPageInfo threadInfo) {
         this.threadInfo = threadInfo;
-    }
-
-    public Map<String, String> get__F() {
-        return __F;
-    }
-
-    public void set__F(Map<String, String> __F) {
-        this.__F = __F;
     }
 
     public int get__ROWS() {
