@@ -1,0 +1,21 @@
+[versions]
+gradle = "8.6.1"
+kotlin = "2.0.21"
+fastjson2 = "2.0.59.android8"
+
+[plugins]
+# kotlin
+org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+
+
+[libraries]
+#kotlin
+kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+kotlin-stdlib ={group="org.jetbrains.kotlin", name="kotlin-stdlib", version.ref="kotlin"}
+kotlin-reflect ={group="org.jetbrains.kotlin", name="kotlin-reflect", version.ref="kotlin"}
+
+gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
+
+# fastJson
+fastjson2 = { group = "com.alibaba.fastjson2", name = "fastjson2", version.ref = "fastjson2" }

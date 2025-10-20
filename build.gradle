@@ -3,8 +3,6 @@ buildscript {
         compose_version = '1.6.8'
         compose_ui_version = '1.7.0'
         compose_activity_version = '1.10.1'
-        compose_compile_version = '1.5.15'
-        kotlin_version = '1.9.25'
         core_ktx_version = '1.7.0'
         appcompat_version = "1.7.1"
         androidx_material_version = '1.12.0'
@@ -23,9 +21,10 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.5.2'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath libs.gradle
+        classpath libs.kotlin
     }
+
 }
 
 allprojects {
@@ -37,6 +36,7 @@ allprojects {
         google()
         mavenCentral()
     }
+
 }
 
 task clean(type: Delete) {
@@ -56,3 +56,5 @@ project.ext {
 
     preference_version = "1.1.1"
 }
+
+

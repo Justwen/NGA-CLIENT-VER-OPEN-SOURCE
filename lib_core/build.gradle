@@ -40,4 +40,6 @@ dependencies {
 
     implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
 
+    implementation(libs.fastjson2)
+
 }

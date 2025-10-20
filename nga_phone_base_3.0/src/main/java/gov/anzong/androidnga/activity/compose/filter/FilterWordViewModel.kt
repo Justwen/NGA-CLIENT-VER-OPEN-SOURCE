@@ -25,7 +25,7 @@ class FilterWordViewModel : ViewModel() {
 
     private val filterWordModel = FilterWordModel()
 
-    val filterStateList: List<FilterState<*>>
+    val filterStateList: List<FilterState<Any>>
 
     init {
         filterStateList = listOf(
@@ -45,10 +45,10 @@ class FilterWordViewModel : ViewModel() {
             FilterState<String>("官方用户屏蔽").apply {
                 tips =
                     "在当前设备和其他设备生效，仅影响当前用户，和官网屏蔽规则保持一致，如需修改，请前往NGA官网\"我的\"->\"屏蔽帖子\"操作"
-//                removeAction = { removeFilterUser(it.toString()) }
-//                addAction = {
-//                    addFilterUser(it)
-//                }
+    //                removeAction = { removeFilterUser(it.toString()) }
+    //                addAction = {
+    //                    addFilterUser(it)
+    //                }
                 showAction = {
                     val data = it.toString().split("/")
                     showUserProfile(User(data[0], data[1]))
@@ -57,12 +57,12 @@ class FilterWordViewModel : ViewModel() {
             FilterState<String>("官方关键词屏蔽").apply {
                 tips =
                     "在当前设备和其他设备生效，仅影响当前用户，和官网屏蔽规则保持一致，如需修改，请前往NGA官网\"我的\"->\"屏蔽帖子\"操作"
-//                removeAction = { removeFilterWord(it.toString()) }
-//                addAction = {
-//                    addFilterWord(it)
-//                }
+    //                removeAction = { removeFilterWord(it.toString()) }
+    //                addAction = {
+    //                    addFilterWord(it)
+    //                }
             }
-        ).toImmutableList()
+        ).toImmutableList() as List<FilterState<Any>>
 
     }
 

@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    alias(libs.plugins.compose.compiler)
 }
 
 def static getDate() {
@@ -91,9 +92,6 @@ android {
     }
     buildFeatures {
         compose true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion compose_compile_version
     }
     packagingOptions {
         resources {
