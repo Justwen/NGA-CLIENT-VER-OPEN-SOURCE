@@ -125,7 +125,7 @@ public class FunctionUtils {
         contentTV.setWebViewClient(client);
         contentTV
                 .loadDataWithBaseURL(
-                        null,
+                        "https://nga.local/signature",
                         FunctionUtils.signatureToHtmlText(row, showImage,
                                 0, fgColorStr,
                                 bgcolorStr, context), "text/html", "utf-8", null);
@@ -267,7 +267,7 @@ public class FunctionUtils {
         });
         contentTV.setWebViewClient(client);
         contentTV.loadDataWithBaseURL(
-                null,
+                "https://nga.local/vote",
                 FunctionUtils.VoteToHtmlText(row, showImage, 0,
                         fgColorStr, bgcolorStr), "text/html", "utf-8", null);
         contentTV.requestLayout();
