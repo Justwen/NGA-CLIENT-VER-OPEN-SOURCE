@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_activity_message_list">短消息</string>
+    <string name="label_activity_message_detail">短消息正文</string>
+    <string name="network_error">网络错误</string>
+
+    <string name="new_message">发新消息</string>
+    <string name="reply_message">回短消息</string>
+</resources>

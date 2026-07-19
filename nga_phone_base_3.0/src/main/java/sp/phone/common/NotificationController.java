@@ -1,6 +1,5 @@
 package sp.phone.common;
 
-import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -14,14 +13,14 @@ import android.preference.PreferenceManager;
 
 import androidx.core.app.NotificationCompat;
 
+import com.justwen.androidnga.base.activity.ARouterConstants;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import gov.anzong.androidnga.R;
-import gov.anzong.androidnga.activity.MessageListActivity;
 import gov.anzong.androidnga.activity.RecentNotificationActivity;
 import gov.anzong.androidnga.base.util.ContextUtils;
-import gov.anzong.androidnga.base.util.DeviceUtils;
 import gov.anzong.androidnga.common.PreferenceKey;
 import gov.anzong.androidnga.http.OnHttpCallBack;
 import sp.phone.mvp.model.entity.NotificationInfo;
@@ -136,7 +135,8 @@ public class NotificationController {
     private void showMessageNotification() {
         Context context = ContextUtils.getContext();
 
-        Intent intent = new Intent(context, MessageListActivity.class);
+        Intent intent = new Intent();
+        intent.setClassName(context, ARouterConstants.ACTIVITY_MESSAGE_LIST_NAME);
 
         PendingIntent pending = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
@@ -158,19 +158,17 @@ public class NotificationController {
                 .setSmallIcon(R.drawable.nga_bg) //设置图标
                 .setWhen(System.currentTimeMillis()) //发送时间
                 .setDefaults(mConfiguration.isNotificationSoundEnabled() ? Notification.DEFAULT_ALL : Notification.DEFAULT_LIGHTS) //设置默认的提示音，振动方式，灯光
-                .setAutoCancel(true);//打开程序后图标消失
-        if (DeviceUtils.isGreaterEqual_10_0()) {
-            builder.setSmallIcon(R.mipmap.ic_launcher_foreground);
-        }
+                //打开程序后图标消失
+                .setAutoCancel(true)
+                .setSmallIcon(R.mipmap.ic_launcher_foreground);
         return builder;
     }
 
-    @TargetApi(26)
     private void createNotificationChannel(Context context) {
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        if (!DeviceUtils.isGreaterEqual_8_0() || notificationManager == null) {
+        if (notificationManager == null) {
             return;
         }
         String id = NOTIFICATION_ID;

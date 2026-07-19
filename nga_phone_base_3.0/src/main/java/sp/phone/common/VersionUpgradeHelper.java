@@ -32,7 +32,7 @@ public class VersionUpgradeHelper {
         if (sp.contains(PreferenceKey.DOWNLOAD_AVATAR_NO_WIFI)) {
             boolean value = sp.getBoolean(PreferenceKey.DOWNLOAD_AVATAR_NO_WIFI, true);
             String newValue = value ? "0" : "2";
-            editor.putString(ContextUtils.getString(R.string.pref_load_avatar_strategy), newValue)
+            editor.putString(ContextUtils.getString(gov.anzong.androidnga.common.R.string.pref_load_avatar_strategy), newValue)
                     .remove(PreferenceKey.DOWNLOAD_AVATAR_NO_WIFI)
                     .apply();
         }
@@ -40,7 +40,7 @@ public class VersionUpgradeHelper {
         if (sp.contains(PreferenceKey.DOWNLOAD_IMG_NO_WIFI)) {
             boolean value = sp.getBoolean(PreferenceKey.DOWNLOAD_IMG_NO_WIFI, true);
             String newValue = value ? "0" : "2";
-            editor.putString(ContextUtils.getString(R.string.pref_load_pic_strategy), newValue)
+            editor.putString(ContextUtils.getString(gov.anzong.androidnga.common.R.string.pref_load_pic_strategy), newValue)
                     .remove(PreferenceKey.DOWNLOAD_IMG_NO_WIFI)
                     .apply();
         }

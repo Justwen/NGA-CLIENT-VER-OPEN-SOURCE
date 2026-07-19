@@ -2,7 +2,9 @@ package sp.phone.mvp.model.entity;
 
 import androidx.annotation.NonNull;
 
-public class ThreadPageInfo {
+import gov.anzong.androidnga.common.base.JavaBean;
+
+public class ThreadPageInfo implements JavaBean {
 
     private int mTid;
 
@@ -184,7 +186,7 @@ public class ThreadPageInfo {
         mMirrorBoard = "版面镜像".equals(parentBoard);
     }
 
-    public static class ReplyInfo {
+    public static class ReplyInfo implements JavaBean {
 
         private String mPidStr;
 

@@ -38,7 +38,7 @@ import sp.phone.task.ChangeAvatarLoadTask;
 import sp.phone.theme.ThemeManager;
 import sp.phone.util.ActivityUtils;
 import sp.phone.util.ImageUtils;
-import sp.phone.util.NLog;
+import gov.anzong.androidnga.common.util.NLog;
 import sp.phone.util.StringUtils;
 
 public class AvatarPostActivity extends BaseActivity implements

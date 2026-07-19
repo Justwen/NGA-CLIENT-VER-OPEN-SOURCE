@@ -11,14 +11,17 @@ import androidx.annotation.Nullable;
 
 import com.danielstone.materialaboutlibrary.MaterialAboutActivity;
 import com.danielstone.materialaboutlibrary.items.MaterialAboutActionItem;
+import com.danielstone.materialaboutlibrary.items.MaterialAboutItemOnClickAction;
 import com.danielstone.materialaboutlibrary.model.MaterialAboutCard;
 import com.danielstone.materialaboutlibrary.model.MaterialAboutList;
+import com.justwen.androidnga.base.activity.ARouterConstants;
+import com.justwen.androidnga.ui.fragment.WebViewFragment;
 
 import gov.anzong.androidnga.BuildConfig;
 import gov.anzong.androidnga.R;
-import gov.anzong.androidnga.debug.Debugger;
 import sp.phone.theme.ThemeManager;
 import sp.phone.ui.fragment.dialog.VersionUpgradeDialogFragment;
+import sp.phone.util.ARouterUtils;
 import sp.phone.util.FunctionUtils;
 
 public class AboutActivity extends MaterialAboutActivity {
@@ -63,10 +66,10 @@ public class AboutActivity extends MaterialAboutActivity {
                 .text("License")
                 .subText("GNU GPL v2,开放源代码许可")
                 .setOnClickAction(() -> {
-                    Intent intent = new Intent(AboutActivity.this, WebViewerActivity.class);
-                    intent.putExtra("path", "file:///android_asset/OSLICENSE.TXT");
-                    startActivity(intent);
-
+                    ARouterUtils.build(ARouterConstants.ACTIVITY_FRAGMENT_TEMPLATE)
+                            .withString("url", "file:///android_asset/OSLICENSE.TXT")
+                            .withString("fragment", WebViewFragment.class.getName())
+                            .navigation(this);
                 })
                 .icon(R.drawable.ic_license)
                 .build());
@@ -74,9 +77,10 @@ public class AboutActivity extends MaterialAboutActivity {
         builder.addItem(new MaterialAboutActionItem.Builder()
                 .text("检测更新")
                 .setOnClickAction(() -> {
-                    Intent intent = new Intent(AboutActivity.this, WebViewerActivity.class);
-                    intent.putExtra("path", "https://github.com/Justwen/NGA-CLIENT-VER-OPEN-SOURCE/releases");
-                    startActivity(intent);
+                    ARouterUtils.build(ARouterConstants.ACTIVITY_FRAGMENT_TEMPLATE)
+                            .withString("url", "https://github.com/Justwen/NGA-CLIENT-VER-OPEN-SOURCE/releases")
+                            .withString("fragment", WebViewFragment.class.getName())
+                            .navigation(this);
 
                 })
                 .icon(R.drawable.ic_update_24dp)
@@ -91,7 +95,12 @@ public class AboutActivity extends MaterialAboutActivity {
         builder.addItem(new MaterialAboutActionItem.Builder()
                 .text("代码")
                 .subText("[@竹井詩織里]/[@cfan8]/[@jjimmys]\n[@Moandor]/[@Elrond]/[@Justwen]")
-                .setOnLongClickAction(Debugger::toggleDebugMode)
+                .setOnLongClickAction(new MaterialAboutItemOnClickAction() {
+                    @Override
+                    public void onClick() {
+                        ARouterUtils.navigation(ARouterConstants.ACTIVITY_DEBUG);
+                    }
+                })
                 .icon(R.drawable.ic_code)
                 .build());
 

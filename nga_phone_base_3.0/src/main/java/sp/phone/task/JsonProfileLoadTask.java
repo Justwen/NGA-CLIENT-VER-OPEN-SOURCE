@@ -21,11 +21,11 @@ import io.reactivex.schedulers.Schedulers;
 import sp.phone.http.bean.AdminForumsData;
 import sp.phone.http.bean.ProfileData;
 import sp.phone.http.bean.ReputationData;
-import sp.phone.http.retrofit.RetrofitHelper;
-import sp.phone.http.retrofit.RetrofitService;
+import com.justwen.androidnga.base.network.retrofit.RetrofitHelper;
+import com.justwen.androidnga.base.network.retrofit.RetrofitService;
 import sp.phone.rxjava.BaseSubscriber;
 import sp.phone.util.ActivityUtils;
-import sp.phone.util.NLog;
+import gov.anzong.androidnga.common.util.NLog;
 import sp.phone.util.StringUtils;
 
 public class JsonProfileLoadTask {

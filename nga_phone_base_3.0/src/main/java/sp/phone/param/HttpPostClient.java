@@ -4,8 +4,8 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import sp.phone.http.retrofit.RetrofitHelper;
-import sp.phone.util.NLog;
+import com.justwen.androidnga.base.network.retrofit.RetrofitHelper;
+import gov.anzong.androidnga.common.util.NLog;
 
 public class HttpPostClient {
     private static final String LOG_TAG = HttpPostClient.class

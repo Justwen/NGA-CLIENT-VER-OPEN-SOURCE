@@ -117,37 +117,6 @@ public class ProfileActivity extends BaseActivity implements OnHttpCallBack<Prof
 
     private Menu mOptionMenu;
 
-    /**
-     * 利用反射获取状态栏高度
-     */
-    public int getStatusBarHeight() {
-        int result;
-        Resources res = getResources();
-        //获取状态栏高度的资源id
-        int resourceId = res.getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            result = res.getDimensionPixelSize(resourceId);
-        } else {
-            result = res.getDimensionPixelSize(R.dimen.status_bar_height);
-        }
-        return result;
-    }
-
-    private void updateToolbarLayout() {
-        AppBarLayout appBarLayout = findViewById(R.id.app_bar);
-        if (DeviceUtils.isFullScreenDevice()) {
-            appBarLayout.getLayoutParams().height = getResources().getDimensionPixelSize(R.dimen.app_bar_height_full_screen);
-        }
-        int statusBarHeight = getStatusBarHeight();
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) toolbar.getLayoutParams();
-        lp.setMargins(0, statusBarHeight, 0, 0);
-
-        View parentView = (View) mAvatarIv.getParent();
-        parentView.setPadding(0, statusBarHeight, 0, 0);
-
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setToolbarEnabled(true);
@@ -172,18 +141,7 @@ public class ProfileActivity extends BaseActivity implements OnHttpCallBack<Prof
         setContentView(R.layout.activity_user_profile);
         ButterKnife.bind(this);
         setupActionBar();
-        updateToolbarLayout();
-        setupStatusBar();
         refresh();
-    }
-
-    private void setupStatusBar() {
-        Window window = getWindow();
-        View decorView = window.getDecorView();
-        //两个 flag 要结合使用，表示让应用的主体内容占用系统状态栏的空间
-        int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-        decorView.setSystemUiVisibility(option);
-        getWindow().setStatusBarColor(Color.TRANSPARENT);
     }
 
     private void refresh() {
@@ -553,6 +511,7 @@ public class ProfileActivity extends BaseActivity implements OnHttpCallBack<Prof
     private void handleAvatar(ProfileData row) {
         final String avatarUrl = FunctionUtils.parseAvatarUrl(row.getAvatarUrl());//
         ImageUtils.loadRoundCornerAvatar(mAvatarIv, avatarUrl);
+        com.justwent.androidnga.bu.UserManager.INSTANCE.setAvatarUrl(row.getUid(), avatarUrl);
         ImageUtils.loadDefaultAvatar((ImageView) findViewById(R.id.iv_toolbar_layout_bg), avatarUrl);
 
     }

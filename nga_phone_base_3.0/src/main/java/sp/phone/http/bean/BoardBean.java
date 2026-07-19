@@ -19,7 +19,7 @@ public class BoardBean implements JavaBean {
     public String id;
     public List<ContentBean> content;
 
-    public static class ContentBean {
+    public static class ContentBean implements JavaBean {
         /**
          * fid : 7
          * name : 艾泽拉斯议事厅

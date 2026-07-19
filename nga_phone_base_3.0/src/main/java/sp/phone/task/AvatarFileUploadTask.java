@@ -23,7 +23,7 @@ import gov.anzong.androidnga.Utils;
 import gov.anzong.androidnga.base.util.ToastUtils;
 import sp.phone.util.ActivityUtils;
 import sp.phone.util.ImageUtils;
-import sp.phone.util.NLog;
+import gov.anzong.androidnga.common.util.NLog;
 import sp.phone.util.StringUtils;
 
 public class AvatarFileUploadTask extends AsyncTask<String, Integer, String> {

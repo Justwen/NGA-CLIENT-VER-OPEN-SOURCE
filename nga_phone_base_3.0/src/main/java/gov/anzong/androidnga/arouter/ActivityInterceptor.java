@@ -19,7 +19,7 @@ public class ActivityInterceptor implements IInterceptor {
     @Override
     public void process(Postcard postcard, InterceptorCallback interceptorCallback) {
 
-        if (UserManagerImpl.getInstance().getActiveUser() == null) {
+        if (!UserManagerImpl.getInstance().hasValidUser()) {
             String path = postcard.getPath();
             for (String activity : ARouterConstants.ACTIVITY_NEED_LOGIN) {
                 if (activity.equals(path)) {

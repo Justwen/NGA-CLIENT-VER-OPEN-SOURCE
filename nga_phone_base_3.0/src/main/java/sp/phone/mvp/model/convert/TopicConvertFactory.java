@@ -3,6 +3,7 @@ package sp.phone.mvp.model.convert;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -11,17 +12,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import sp.phone.common.FilterKeyword;
-import sp.phone.common.FilterKeywordsManagerImpl;
+import gov.anzong.androidnga.activity.compose.filter.FilterManager;
+import gov.anzong.androidnga.activity.compose.filter.FilterKeyword;
 import sp.phone.common.PhoneConfiguration;
 import sp.phone.common.User;
-import sp.phone.common.UserManagerImpl;
 import sp.phone.http.bean.TopicListBean;
 import sp.phone.mvp.model.entity.SubBoard;
 import sp.phone.mvp.model.entity.ThreadPageInfo;
 import sp.phone.mvp.model.entity.TopicListInfo;
-import sp.phone.util.ForumUtils;
-import sp.phone.util.NLog;
+import gov.anzong.androidnga.common.util.ForumUtils;
+import gov.anzong.androidnga.common.util.NLog;
 import sp.phone.util.StringUtils;
 
 /**
@@ -78,32 +78,9 @@ public class TopicConvertFactory {
 //                }).collect(Collectors.toList())
 //               );
 
-        Iterator<ThreadPageInfo> iterator = data.getThreadPageList().iterator();
 
-        List<User> blackList = UserManagerImpl.getInstance().getBlackList();
-        List<FilterKeyword> filterKeywords = FilterKeywordsManagerImpl.getInstance().getKeywords();
+        FilterManager.INSTANCE.filterTopic(data.getThreadPageList());
 
-        while (iterator.hasNext()) {
-            ThreadPageInfo pageInfo = iterator.next();
-            boolean removed = false;
-            for (FilterKeyword keyword : filterKeywords) {
-                if (keyword.isEnabled() && pageInfo.getSubject().contains(keyword.getKeyword())) {
-                    iterator.remove();
-                    removed = true;
-                    break;
-                }
-            }
-            if (removed) {
-                continue;
-            }
-            for (User user : blackList) {
-                if (Objects.equals(pageInfo.getAuthor(), user.getNickName())) {
-                    iterator.remove();
-                    break;
-                }
-            }
-
-        }
     }
 
     private void sort(TopicListInfo listInfo) {
@@ -219,9 +196,14 @@ public class TopicConvertFactory {
                 pageInfo.setReplyInfo(replyInfo);
             }
 
-            Map<String, String> parent = tBean.getParent();
-            if (parent != null) {
-                pageInfo.setBoard(parent.get("2"));
+            String parent = tBean.parent;
+            if (!TextUtils.isEmpty(parent)) {
+                try {
+                    JSONObject obj = JSON.parseObject(parent);
+                    pageInfo.setBoard(Objects.requireNonNull(obj.get("2")).toString());
+                } catch (Exception e) {
+                    // ignore
+                }
             }
 
             pageInfo.setPostDate(tBean.getPostdate());

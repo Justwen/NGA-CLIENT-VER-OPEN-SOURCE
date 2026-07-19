@@ -23,6 +23,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
+import com.justwen.androidnga.base.activity.ARouterConstants;
 import com.trello.rxlifecycle2.android.FragmentEvent;
 
 import butterknife.BindView;
@@ -30,7 +31,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import gov.anzong.androidnga.R;
 import gov.anzong.androidnga.Utils;
-import gov.anzong.androidnga.activity.WebViewActivity;
+import gov.anzong.androidnga.activity.fragment.ForumWebFragment;
+import gov.anzong.androidnga.base.util.ShareUtils;
 import gov.anzong.androidnga.base.widget.TabLayoutEx;
 import sp.phone.common.PhoneConfiguration;
 import sp.phone.common.UserManagerImpl;
@@ -43,8 +45,8 @@ import sp.phone.task.BookmarkTask;
 import sp.phone.theme.ThemeManager;
 import sp.phone.ui.adapter.ArticlePagerAdapter;
 import sp.phone.ui.fragment.dialog.GotoDialogFragment;
+import sp.phone.util.ARouterUtils;
 import sp.phone.util.ActivityUtils;
-import sp.phone.util.FunctionUtils;
 import sp.phone.util.StringUtils;
 import sp.phone.view.behavior.ScrollAwareFamBehavior;
 
@@ -159,8 +161,7 @@ public class ArticleTabFragment extends BaseRxFragment {
             intent.setClass(getContext(),
                     PhoneConfiguration.getInstance().postActivityClass);
         } else {
-            intent.setClass(getContext(),
-                    PhoneConfiguration.getInstance().loginActivityClass);
+            ActivityUtils.startLoginActivity(getContext());
         }
         getActivity().startActivityForResult(intent, ActivityUtils.REQUEST_CODE_TOPIC_POST);
     }
@@ -198,10 +199,11 @@ public class ArticleTabFragment extends BaseRxFragment {
                 getActivityViewModel().setCachePage(mRequestParam.page);
                 break;
             case R.id.menu_open_by_browser:
-                Intent intent = new Intent(getContext(), WebViewActivity.class);
-                intent.putExtra("url",getCurrentUrl());
-                intent.putExtra("title", mRequestParam.title);
-                startActivity(intent);
+                ARouterUtils.build(ARouterConstants.ACTIVITY_FRAGMENT_TEMPLATE)
+                        .withString("url", getCurrentUrl())
+                        .withString("title", mRequestParam.title)
+                        .withString("fragment", ForumWebFragment.class.getName())
+                        .navigation(getContext());
                 break;
             default:
                 return super.onOptionsItemSelected(item);
@@ -245,7 +247,7 @@ public class ArticleTabFragment extends BaseRxFragment {
         } else {
             builder.append("tid=").append(mRequestParam.tid).append(" (分享自NGA安卓客户端开源版)");
         }
-        FunctionUtils.share(getContext(), title, builder.toString());
+        ShareUtils.INSTANCE.shareText(getContext(), title, builder.toString());
     }
 
     @Override

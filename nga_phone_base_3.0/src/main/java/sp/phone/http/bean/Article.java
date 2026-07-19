@@ -1,6 +1,8 @@
 package sp.phone.http.bean;
 
-public class Article {
+import gov.anzong.androidnga.common.base.JavaBean;
+
+public class Article implements JavaBean {
 
     //	private int id;
     private String title;//

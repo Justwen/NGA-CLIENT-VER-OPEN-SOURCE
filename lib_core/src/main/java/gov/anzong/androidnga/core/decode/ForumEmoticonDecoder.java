@@ -22,29 +22,14 @@ public class ForumEmoticonDecoder implements IForumDecoder {
     };// (0-44)
 
     private static final String[] IMG_ADD_ACNIANG = {
-            "-47218_5052bca81a77f.png",
-            "-47218_5052bd3b4b3bd.png", "-1324875_50e597f5ce78d.png",
-            "-47218_5052bcba15fcf.png", "-47218_5052bcb6e96d1.png",
-            "-47218_5052bd2a0d49a.png", "-47218_5052c10aa0303.png",
-            "-47218_5052bcaaacb45.png", "-1324875_50e597c090c58.png",
-            "-47218_5052c104b8e27.png", "-47218_5052bc587c6f9.png",
-            "-47218_5052c1076f119.png", "-47218_5052bd2497822.png",
-            "-47218_5052bd2fa0790.png", "-47218_5052c0f6da079.png",
-            "-47218_5052bc4cc6331.png", "-47218_5052bcf37c4c9.png",
-            "-1324875_513394fbc54e1.gif", "-47218_5052bc4f51be7.png",
-            "-47218_5052c1101747c.png", "-47218_5052c10d1f08c.png",
-            "-47218_5052bcdd279bc.png", "-47218_5052bce27ab4d.png",
-            "-47218_5052bd35aec58.png", "-47218_5052bcdfd9c69.png",
-            "-47218_5052bc835856c.png", "-47218_5052bce4f2963.png",
-            "-47218_5052bd330dfad.png", "-47218_5052bc7d91913.png",
-            "-47218_5052c112b3b1b.png", "-47218_5052bcf0ba2db.png",
-            "-47218_5052bc8638067.png", "-47218_5052bca55cb6e.png",
-            "-47218_5052bc521c04b.png", "-47218_5052bca2a2f43.png",
-            "-47218_5052bcad49530.png", "-47218_5052bceb823da.png",
-            "-47218_5052bc80140e3.png", "-47218_5052bcb3b8944.png",
-            "-1324875_50d841a63a673.png", "-47218_5052bcf68ddc2.png",
-            "-1324875_50e597e9d6319.png", "-47218_5052bd27520ef.png",
-            "-47218_5052bcbe35760.png", "-1324875_50e597f190a11.png"// 0-44
+            "ac0.png", "ac1.png", "ac2.png", "ac3.png", "ac4.png", "ac5.png", "ac6.png",
+            "ac7.png", "ac8.png", "ac9.png", "ac10.png", "ac11.png", "ac12.png", "ac13.png",
+            "ac14.png", "ac15.png", "ac16.png", "ac17.png", "ac18.png", "ac19.png",
+            "ac20.png", "ac21.png", "ac22.png", "ac23.png", "ac24.png", "ac25.png",
+            "ac26.png", "ac27.png", "ac28.png", "ac29.png", "ac30.png", "ac31.png",
+            "ac32.png", "ac33.png", "ac34.png", "ac35.png", "ac36.png", "ac37.png",
+            "ac38.png", "ac39.png", "ac40.png", "ac41.png", "ac43.png", "ac42.png",
+            "ac44.png"// 0-44
     };
 
     private static final String[] UBB_CODE_ACNIANG_NEW = {
@@ -71,6 +56,21 @@ public class ForumEmoticonDecoder implements IForumDecoder {
             "a2_26.png", "a2_11.png", "a2_12.png", "a2_13.png", "a2_20.png",
             "a2_22.png", "a2_42.png", "a2_37.png", "a2_38.png", "a2_39.png",
             "a2_41.png", "a2_40.png",// 0-45
+    };
+
+    private static final String UBB_CODE_NGNIANG[] = {
+                "呲牙笑", "奸笑", "问号", "茶", "笑指", "燃尽", "晕", "扇笑", "寄", "别急",
+                "doge", "丧", "汗", "叹气", "吃饼", "吃瓜", "吐舌", "哭", "喘", "心", "喷",
+                "困", "大哭", "大惊", "害怕", "惊", "暴怒", "气愤", "热", "瓜不熟", "瞎", "色",
+                "斜眼", "问号大"
+    };
+    private static final String IMG_ADD_NGNIANG[] = {
+            "ng_1.png", "ng_2.png", "ng_3.png", "ng_4.png", "ng_5.png", "ng_6.png",
+            "ng_7.png", "ng_8.png", "ng_9.png", "ng_10.png", "ng_11.png", "ng_12.png",
+            "ng_13.png", "ng_15.png", "ng_16.png", "ng_17.png", "ng_18.png", "ng_19.png",
+            "ng_20.png", "ng_21.png", "ng_22.png", "ng_24.png", "ng_25.png", "ng_26.png",
+            "ng_27.png", "ng_28.png", "ng_30.png", "ng_31.png", "ng_32.png", "ng_33.png",
+            "ng_34.png", "ng_35.png", "ng_37.png", "ng_38.png"
     };
 
     private static final String[] UBB_CODE_PENGUIN = {
@@ -152,6 +152,10 @@ public class ForumEmoticonDecoder implements IForumDecoder {
 
         for (int i = 0; i < UBB_CODE_ACNIANG_NEW.length; i++) {
             sEmotionTable.put("a2", UBB_CODE_ACNIANG_NEW[i], IMG_ADD_ACNIANG_NEW[i]);
+        }
+
+        for (int i = 0; i < UBB_CODE_NGNIANG.length; i++) {
+            sEmotionTable.put("ng", UBB_CODE_NGNIANG[i], IMG_ADD_NGNIANG[i]);
         }
 
         for (int i = 0; i < UBB_CODE_PST.length; i++) {

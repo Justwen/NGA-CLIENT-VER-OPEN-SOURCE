@@ -2,13 +2,13 @@ package sp.phone.task;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.justwen.androidnga.base.network.retrofit.RetrofitHelper;
 
+import gov.anzong.androidnga.activity.compose.board.ForumBoardViewModel;
+import gov.anzong.androidnga.core.board.data.BoardEntity;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import sp.phone.http.OnSimpleHttpCallBack;
-import sp.phone.http.retrofit.RetrofitHelper;
-import sp.phone.mvp.model.BoardModel;
-import sp.phone.mvp.model.entity.Board;
 import sp.phone.rxjava.BaseSubscriber;
 import sp.phone.util.StringUtils;
 
@@ -18,7 +18,7 @@ import sp.phone.util.StringUtils;
 public class SearchBoardTask {
 
 
-    public static void execute(String boardName, OnSimpleHttpCallBack<Board> callBack) {
+    public static void execute(String boardName, OnSimpleHttpCallBack<BoardEntity> callBack) {
         RetrofitHelper.getInstance()
                 .getService()
                 .get("http://bbs.nga.cn/forum.php?&__output=8&key=" + StringUtils.encodeUrl(boardName, "gbk"))
@@ -29,9 +29,11 @@ public class SearchBoardTask {
                         JSONObject obj = JSON.parseObject(s).getJSONObject("data").getJSONObject("0");
                         int fid = obj.getInteger("fid");
                         String title = obj.getString("name");
-                        Board board = BoardModel.getInstance().findBoard(String.valueOf(fid));
+                        BoardEntity board = ForumBoardViewModel.INSTANCE.findBoard(fid, 0);
                         if (board == null) {
-                            board = new Board(fid, title);
+                            board = new BoardEntity();
+                            board.setFid(fid);
+                            board.setName(title);
                         }
                         return board;
 
@@ -41,9 +43,9 @@ public class SearchBoardTask {
                     return null;
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<Board>() {
+                .subscribe(new BaseSubscriber<BoardEntity>() {
                     @Override
-                    public void onNext(Board board) {
+                    public void onNext(BoardEntity board) {
                         callBack.onResult(board);
                     }
 

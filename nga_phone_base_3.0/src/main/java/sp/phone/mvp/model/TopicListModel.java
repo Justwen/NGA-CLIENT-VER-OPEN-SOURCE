@@ -23,8 +23,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
-import sp.phone.http.retrofit.RetrofitHelper;
-import sp.phone.http.retrofit.RetrofitService;
+import com.justwen.androidnga.base.network.retrofit.RetrofitHelper;
+import com.justwen.androidnga.base.network.retrofit.RetrofitService;
 import sp.phone.mvp.contract.TopicListContract;
 import sp.phone.mvp.model.convert.ErrorConvertFactory;
 import sp.phone.mvp.model.convert.TopicConvertFactory;
@@ -32,7 +32,7 @@ import sp.phone.mvp.model.entity.ThreadPageInfo;
 import sp.phone.mvp.model.entity.TopicListInfo;
 import sp.phone.param.TopicListParam;
 import sp.phone.rxjava.BaseSubscriber;
-import sp.phone.util.NLog;
+import gov.anzong.androidnga.common.util.NLog;
 import sp.phone.util.StringUtils;
 
 /**

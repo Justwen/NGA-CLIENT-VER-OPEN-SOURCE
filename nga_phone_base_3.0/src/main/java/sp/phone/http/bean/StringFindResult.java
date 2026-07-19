@@ -1,6 +1,8 @@
 package sp.phone.http.bean;
 
-public class StringFindResult {
+import gov.anzong.androidnga.common.base.JavaBean;
+
+public class StringFindResult implements JavaBean {
 
     public String result = null;
     public int position = -1;

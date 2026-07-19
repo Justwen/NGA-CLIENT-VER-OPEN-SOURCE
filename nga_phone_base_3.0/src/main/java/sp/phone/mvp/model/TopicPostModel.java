@@ -22,6 +22,7 @@ import java.util.concurrent.TimeUnit;
 
 import gov.anzong.androidnga.R;
 import gov.anzong.androidnga.Utils;
+import gov.anzong.androidnga.base.logger.Logger;
 import gov.anzong.androidnga.base.util.ContextUtils;
 import gov.anzong.androidnga.http.OnHttpCallBack;
 import gov.anzong.androidnga.util.ToastUtils;
@@ -36,15 +37,15 @@ import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import sp.phone.http.bean.TopicPostBean;
-import sp.phone.http.retrofit.RetrofitHelper;
-import sp.phone.http.retrofit.RetrofitService;
+import com.justwen.androidnga.base.network.retrofit.RetrofitHelper;
+import com.justwen.androidnga.base.network.retrofit.RetrofitService;
 import sp.phone.mvp.contract.TopicPostContract;
 import sp.phone.param.ParamKey;
 import sp.phone.param.PostParam;
 import sp.phone.rxjava.BaseSubscriber;
 import sp.phone.task.TopicPostTask;
 import sp.phone.util.ImageUtils;
-import sp.phone.util.NLog;
+import gov.anzong.androidnga.common.util.NLog;
 import sp.phone.util.StringUtils;
 
 ;
@@ -233,7 +234,7 @@ public class TopicPostModel extends BaseModel implements TopicPostContract.Model
                             postParam.appendAttachment(object.getString("attachments"), object.getString("attachments_check"));
                             callBack.onSuccess(object.getString("url"));
                         } catch (Exception e) {
-                            NLog.e("exception occur while uploading file " + s);
+                            Logger.d("exception occur while uploading file " + s);
                             callBack.onError("上传图片失败，请尝试更换域名后重试");
                         }
                     }

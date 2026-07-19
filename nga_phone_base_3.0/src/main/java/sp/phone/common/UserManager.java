@@ -4,8 +4,6 @@ import android.content.Context;
 
 import java.util.List;
 
-import sp.phone.http.bean.ThreadData;
-
 public interface UserManager {
 
     int getUserSize();
@@ -52,19 +50,9 @@ public interface UserManager {
 
     void addToBlackList(String authorName, String authorId);
 
-    void addToBlackList(User user);
-
     void removeFromBlackList(String authorId);
 
     boolean checkBlackList(String authorId);
-
-    List<User> getBlackList();
-
-    void removeAllBlackList();
-
-    void putAvatarUrl(String uid, String url);
-
-    void putAvatarUrl(ThreadData info);
 
     String getAvatarUrl(String uid);
 

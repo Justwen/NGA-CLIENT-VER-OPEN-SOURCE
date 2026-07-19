@@ -1,5 +1,7 @@
 package gov.anzong.androidnga.ui.fragment
 
+import android.os.Bundle
+import android.view.View
 import androidx.annotation.LayoutRes
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -33,5 +35,10 @@ open class BaseFragment : Fragment {
 
     open fun onBackPressed() : Boolean {
         return false
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        view.fitsSystemWindows = false
     }
 }

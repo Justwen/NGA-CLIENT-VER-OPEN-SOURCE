@@ -22,14 +22,14 @@ import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import sp.phone.common.UserManagerImpl;
 import sp.phone.http.bean.ThreadData;
-import sp.phone.http.retrofit.RetrofitHelper;
-import sp.phone.http.retrofit.RetrofitService;
+import com.justwen.androidnga.base.network.retrofit.RetrofitHelper;
+import com.justwen.androidnga.base.network.retrofit.RetrofitService;
 import sp.phone.mvp.contract.ArticleListContract;
 import sp.phone.mvp.model.convert.ArticleConvertFactory;
 import sp.phone.mvp.model.convert.ErrorConvertFactory;
 import sp.phone.param.ArticleListParam;
 import sp.phone.rxjava.BaseSubscriber;
-import sp.phone.util.NLog;
+import gov.anzong.androidnga.common.util.NLog;
 
 /**
  * 加载帖子内容
@@ -104,7 +104,6 @@ public class ArticleListModel extends BaseModel implements ArticleListContract.M
                     @Override
                     public void onNext(@NonNull ThreadData threadData) {
                         callBack.onSuccess(threadData);
-                        UserManagerImpl.getInstance().putAvatarUrl(threadData);
                     }
 
                     @Override

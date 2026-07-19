@@ -16,9 +16,11 @@ public class ForumDecoder {
 
     static {
         sDecoderPool.add(new ForumBasicDecoder());
+        sDecoderPool.add(new ForumVoteDecoder());
         sDecoderPool.add(new ForumAlbumDecoder());
         sDecoderPool.add(new ForumEmoticonDecoder());
         sDecoderPool.add(new ForumImageDecoder());
+        sDecoderPool.add(new ForumDiceDecoder());
     }
 
     public static String decode(String rawData, @NonNull HtmlData htmlData, List<String> urls) {

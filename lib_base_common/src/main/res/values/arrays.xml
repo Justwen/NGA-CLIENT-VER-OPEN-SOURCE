@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="nga_domain">
+        <item>https://bbs.ngacn.cc</item>
+        <item>https://bbs.nga.cn</item>
+        <item>https://nga.178.com"</item>
+        <item>https://nga.donews.com</item>
+        <item>https://ngabbs.com</item>
+    </string-array>
+
+    <string-array name="nga_domain_no_http">
+        <item>bbs.ngacn.cc</item>
+        <item>bbs.nga.cn</item>
+        <item>nga.178.com"</item>
+        <item>nga.donews.com</item>
+        <item>ngabbs.com</item>
+    </string-array>
+
+    <string-array name="nga_domain_value">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+
+</resources>

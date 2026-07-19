@@ -8,10 +8,6 @@
                 android:icon="@drawable/ic_login"
                 android:title="登录账号"/>
             <item
-                android:id="@+id/menu_add"
-                android:icon="@drawable/ic_action_add_to_queue"
-                android:title="@string/add_fid"/>
-            <item
                 android:id="@+id/menu_add_id"
                 android:icon="@drawable/ic_action_add_to_queue"
                 android:title="@string/add_fid_id"/>

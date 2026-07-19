@@ -4,8 +4,7 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.appcompat.app.ActionBar;
-
+import gov.anzong.androidnga.R;
 import gov.anzong.androidnga.ui.fragment.BasePreferenceFragment;
 import sp.phone.ui.fragment.BaseFragment;
 
@@ -15,19 +14,14 @@ public class LauncherSubActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setToolbarEnabled(true);
         Intent intent = getIntent();
-        if (intent.getBooleanExtra("hideActionBar", false)) {
-            setToolbarEnabled(true);
-        }
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_toolbar_template);
+        setupToolbar();
         String fragmentStr = intent.getStringExtra("fragment");
         if (fragmentStr != null) {
             commitFragment(fragmentStr);
-        }
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setDisplayShowHomeEnabled(true);
         }
     }
 
@@ -38,13 +32,13 @@ public class LauncherSubActivity extends BaseActivity {
                 mBaseFragment = (BaseFragment) fragment;
                 Bundle bundle = getIntent().getExtras();
                 mBaseFragment.setArguments(bundle);
-                getSupportFragmentManager().beginTransaction().replace(android.R.id.content, mBaseFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_content, mBaseFragment).commit();
             } else if (fragment instanceof BasePreferenceFragment) {
-                getSupportFragmentManager().beginTransaction().replace(android.R.id.content, (BasePreferenceFragment)fragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_content, (BasePreferenceFragment)fragment).commit();
             } else {
                 Bundle bundle = getIntent().getExtras();
                 ((Fragment) fragment).setArguments(bundle);
-                getFragmentManager().beginTransaction().replace(android.R.id.content, (Fragment) fragment).commit();
+                getFragmentManager().beginTransaction().replace(R.id.main_content, (Fragment) fragment).commit();
             }
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
             e.printStackTrace();

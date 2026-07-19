@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class ArticlePage {
+import gov.anzong.androidnga.common.base.JavaBean;
+
+public class ArticlePage implements JavaBean {
 
     private List<Article> listArticle; //
     private HashMap<String, String> now;

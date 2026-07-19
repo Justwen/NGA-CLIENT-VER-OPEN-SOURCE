@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import gov.anzong.androidnga.activity.ArticleListActivity;
-import gov.anzong.androidnga.activity.LoginActivity;
-import gov.anzong.androidnga.activity.MessageDetailActivity;
 import gov.anzong.androidnga.activity.PostActivity;
 import gov.anzong.androidnga.activity.ProfileActivity;
 import gov.anzong.androidnga.activity.SignPostActivity;
@@ -21,8 +19,6 @@ public class PhoneConfiguration extends PreferenceKey implements SharedPreferenc
     public Class<?> postActivityClass = PostActivity.class;
     public Class<?> signPostActivityClass = SignPostActivity.class;
     public Class<?> profileActivityClass = ProfileActivity.class;
-    public Class<?> loginActivityClass = LoginActivity.class;
-    public Class<?> messageDetialActivity = MessageDetailActivity.class;
 
     private boolean mNotificationEnabled;
 
@@ -39,8 +35,6 @@ public class PhoneConfiguration extends PreferenceKey implements SharedPreferenc
     private boolean mLeftHandMode;
 
     private boolean mShowBottomTab;
-
-    private boolean mHardwareAcceleratedEnabled;
 
     private boolean mFilterSubBoard;
 
@@ -76,9 +70,6 @@ public class PhoneConfiguration extends PreferenceKey implements SharedPreferenc
                 break;
             case PreferenceKey.BOTTOM_TAB:
                 mShowBottomTab = sp.getBoolean(key, false);
-                break;
-            case PreferenceKey.HARDWARE_ACCELERATED:
-                mHardwareAcceleratedEnabled = sp.getBoolean(key, true);
                 break;
             case PreferenceKey.FILTER_SUB_BOARD:
                 mFilterSubBoard = sp.getBoolean(key, false);
@@ -123,7 +114,6 @@ public class PhoneConfiguration extends PreferenceKey implements SharedPreferenc
         mShowClassicIcon = sp.getBoolean(PreferenceKey.SHOW_ICON_MODE, false);
         mLeftHandMode = sp.getBoolean(PreferenceKey.LEFT_HAND, false);
         mShowBottomTab = sp.getBoolean(PreferenceKey.BOTTOM_TAB, false);
-        mHardwareAcceleratedEnabled = sp.getBoolean(PreferenceKey.HARDWARE_ACCELERATED, true);
         mFilterSubBoard = sp.getBoolean(PreferenceKey.FILTER_SUB_BOARD, false);
         mSortByPostOrder = sp.getBoolean(PreferenceKey.SORT_BY_POST, false);
 
@@ -141,10 +131,6 @@ public class PhoneConfiguration extends PreferenceKey implements SharedPreferenc
 
     public boolean needFilterSubBoard() {
         return mFilterSubBoard;
-    }
-
-    public boolean isHardwareAcceleratedEnabled() {
-        return mHardwareAcceleratedEnabled;
     }
 
     public boolean isLeftHandMode() {
@@ -224,13 +210,13 @@ public class PhoneConfiguration extends PreferenceKey implements SharedPreferenc
         return mNotificationSoundEnabled;
     }
 
-    public boolean isAvatarLoadEnabled() {
+    public boolean isAvatarLoadEnabled(boolean defValue) {
         if (mAvatarLoadStrategy.equals(PreferenceKey.IMAGE_LOAD_ALWAYS)) {
             return true;
         } else if (mAvatarLoadStrategy.equals(PreferenceKey.IMAGE_LOAD_NEVER)) {
             return false;
         } else {
-            return DeviceUtils.isWifiConnected(ContextUtils.getContext());
+            return defValue;
         }
     }
 

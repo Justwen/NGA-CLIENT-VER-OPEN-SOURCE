@@ -2,7 +2,9 @@ package sp.phone.http.bean;
 
 import java.util.List;
 
-public class ProfileData {
+import gov.anzong.androidnga.common.base.JavaBean;
+
+public class ProfileData implements JavaBean {
 
     private List<AdminForumsData> mAdminForums;
 

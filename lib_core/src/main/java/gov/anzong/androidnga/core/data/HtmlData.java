@@ -4,6 +4,12 @@ import java.util.List;
 
 public class HtmlData implements Cloneable {
 
+    public String uid;
+
+    public String pid;
+
+    public String tid;
+
     private boolean mInBackList;
 
     private boolean mDarkMode;

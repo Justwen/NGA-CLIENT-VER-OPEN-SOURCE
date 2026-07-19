@@ -7,52 +7,33 @@ public class DebugLogger implements ILogger {
     private static final int STACK_LENGTH = 6;
 
     @Override
-    public String d(String tag, String msg) {
+    public void d(String tag, String msg) {
         String finalMsg = addMethodLine(msg);
         Log.d(TAG, finalMsg);
-        return finalMsg;
     }
 
     @Override
-    public String d() {
+    public void d() {
         String finalMsg = addMethodLine("");
         Log.d(TAG, finalMsg);
-        return finalMsg;
     }
 
     @Override
-    public String d(Object msg) {
+    public void d(float msg) {
         String finalMsg = addMethodLine(String.valueOf(msg));
         Log.d(TAG, finalMsg);
-        return finalMsg;
     }
 
     @Override
-    public String d(float msg) {
+    public void d(boolean msg) {
         String finalMsg = addMethodLine(String.valueOf(msg));
         Log.d(TAG, finalMsg);
-        return finalMsg;
     }
 
     @Override
-    public String d(boolean msg) {
+    public void d(int msg) {
         String finalMsg = addMethodLine(String.valueOf(msg));
         Log.d(TAG, finalMsg);
-        return finalMsg;
-    }
-
-    @Override
-    public String d(int msg) {
-        String finalMsg = addMethodLine(String.valueOf(msg));
-        Log.d(TAG, finalMsg);
-        return finalMsg;
-    }
-
-    @Override
-    public String printStackTrace(Throwable throwable) {
-        String msg = Log.getStackTraceString(throwable);
-        d(TAG, msg);
-        return msg;
     }
 
     protected String addMethodLine(String msg) {

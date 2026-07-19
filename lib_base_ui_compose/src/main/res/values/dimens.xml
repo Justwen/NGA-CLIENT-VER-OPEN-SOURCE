@@ -1,0 +1,6 @@
+<resources>
+
+    <dimen name="topic_list_item_padding">12dp</dimen>
+    <dimen name="topic_list_item_sub_text_size">12dp</dimen>
+
+</resources>

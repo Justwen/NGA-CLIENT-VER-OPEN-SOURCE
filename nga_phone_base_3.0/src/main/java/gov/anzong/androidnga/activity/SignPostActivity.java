@@ -33,18 +33,14 @@ public class SignPostActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        setToolbarEnabled(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_sign_reply);
         initBodyText();
         mPostParam = new SignPostParam();
         mPostParam.setUid(UserManagerImpl.getInstance().getUserId());
         setTitle("更改签名");
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeButtonEnabled(true);
-        }
+        setupToolbar();
     }
 
     private void initBodyText() {

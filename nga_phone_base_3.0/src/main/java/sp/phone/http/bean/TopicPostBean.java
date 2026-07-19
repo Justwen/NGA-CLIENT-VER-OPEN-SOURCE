@@ -1,10 +1,12 @@
 package sp.phone.http.bean;
 
+import gov.anzong.androidnga.common.base.JavaBean;
+
 /**
  * Created by Justwen on 2017/6/10.
  */
 
-public class TopicPostBean {
+public class TopicPostBean implements JavaBean {
 
     private DataBean data;
     private String encode;
@@ -43,7 +45,7 @@ public class TopicPostBean {
         this.debug = debug;
     }
 
-    public static class DataBean {
+    public static class DataBean implements JavaBean {
 
         private String action;
         private int fid;
@@ -127,7 +129,7 @@ public class TopicPostBean {
             this.attach_url = attach_url;
         }
 
-        public static class CUBean {
+        public static class CUBean implements JavaBean {
 
             private int uid;
             private int group_bit;
@@ -167,7 +169,7 @@ public class TopicPostBean {
             }
         }
 
-        public static class FBean {
+        public static class FBean implements JavaBean {
 
             private int bit_data;
             private int fid;

@@ -12,7 +12,7 @@ import java.lang.reflect.Field;
 import gov.anzong.androidnga.R;
 import gov.anzong.androidnga.util.ToastUtils;
 import sp.phone.task.PostCommentTask;
-import sp.phone.util.NLog;
+import gov.anzong.androidnga.common.util.NLog;
 
 public class PostCommentDialogFragment extends BaseDialogFragment implements
         PostCommentTask.OnPostCommentFinishedListener {

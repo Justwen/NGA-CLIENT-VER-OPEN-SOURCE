@@ -1,6 +1,8 @@
 package sp.phone.http.bean;
 
-public class Attachment {
+import gov.anzong.androidnga.common.base.JavaBean;
+
+public class Attachment implements JavaBean {
     private String aid;
     private String url_utf8_org_name;
     private String dscp;

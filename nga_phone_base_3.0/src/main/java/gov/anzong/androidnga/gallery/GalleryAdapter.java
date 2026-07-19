@@ -46,28 +46,7 @@ public class GalleryAdapter extends PagerAdapter {
         PhotoView photoView = new PhotoView(container.getContext());
         photoView.setMaximumScale(10.0f);
         String url = mGalleryUrls[position];
-        Glide.with(mContext).load(url).listener(mRequestListener).apply(RequestOptions.fitCenterTransform())
-                .into(new CustomTarget<Drawable>() {
-            @Override
-            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                if (resource instanceof GifDrawable) {
-                    if (!((GifDrawable) resource).isRunning()) {
-                        try {
-                            ((GifDrawable) resource).startFromFirstFrame();
-                            ((GifDrawable) resource).setLoopCount(GifDrawable.LOOP_FOREVER);
-                        } catch (IllegalArgumentException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-                photoView.setImageDrawable(resource);
-            }
-
-            @Override
-            public void onLoadCleared(@Nullable Drawable placeholder) {
-
-            }
-        });
+        Glide.with(mContext).load(url).listener(mRequestListener).apply(RequestOptions.fitCenterTransform()).into(photoView);
         container.addView(photoView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         return photoView;
     }

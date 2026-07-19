@@ -1,36 +1,44 @@
 package gov.anzong.androidnga.base.logger;
 
+import android.util.Log;
+
 public interface ILogger {
 
     String TAG = "NGAClient";
 
-    String d(String tag, String msg);
+    default void d(String tag, String msg) {
+        Log.d(tag, msg);
+    }
 
-    default void clear() {
+    default void d(String tag, String msg, Throwable throwable) {
+        Log.d(tag, msg, throwable);
+    }
+
+    default void close() {
 
     }
 
-    default String d(int msg) {
-        return "";
+    default void d(int msg) {
+        d(TAG, String.valueOf(msg));
     }
 
-    default String d(float msg) {
-        return "";
+    default void d(float msg) {
+        d(TAG, String.valueOf(msg));
     }
 
-    default String d(boolean msg) {
-        return "";
+    default void d(boolean msg) {
+        d(TAG, String.valueOf(msg));
     }
 
-    default String d(Object msg) {
-        return d(TAG, String.valueOf(msg));
+    default void d(String msg) {
+        d(TAG, msg);
     }
 
-    default String d() {
-        return "";
+    default void d(Throwable throwable) {
+        d(TAG, "", throwable);
     }
 
-    default String printStackTrace(Throwable throwable) {
-        return "";
+    default void d() {
     }
+
 }

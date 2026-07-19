@@ -2,11 +2,13 @@ package sp.phone.http.bean;
 
 import java.util.Map;
 
+import gov.anzong.androidnga.common.base.JavaBean;
+
 /**
  * Created by Justwen on 2017/11/23.
  */
 
-public class TopicListBean {
+public class TopicListBean implements JavaBean {
 
     /**
      * data : {"__CU":{"uid":000000,"group_bit":622816,"admincheck":"","rvrc":-10},"__GLOBAL":"./template/js/nga_global.xml","__F":{"topped_topic":"","sub_forums":""},"__ROWS":2,"__T":{"0":{"tid":11915941,"fid":275,"quote_from":0,"quote_to":"","topic_misc":"","author":"xxxxxx","authorid":000000,"subject":"客户端测试发帖","type":516,"postdate":1498529634,"lastpost":1499236460,"lastposter":"killmanasdfasdf","replies":13,"lastmodify":1500443085,"recommend":1,"titlefont":"","admin_ui":1,"tpcurl":"/read.php?tid=11915941&fav=c7cf9a59","parent":{"0":275,"2":"测试版面"}}},"__T__ROWS":1,"__T__ROWS_PAGE":35,"__R__ROWS_PAGE":20}
@@ -42,7 +44,7 @@ public class TopicListBean {
         this.time = time;
     }
 
-    public static class DataBean {
+    public static class DataBean implements JavaBean {
         /**
          * __CU : {"uid":000000,"group_bit":622816,"admincheck":"","rvrc":-10}
          * __GLOBAL : ./template/js/nga_global.xml
@@ -127,7 +129,7 @@ public class TopicListBean {
             this.__R__ROWS_PAGE = __R__ROWS_PAGE;
         }
 
-        public static class CUBean {
+        public static class CUBean implements JavaBean {
             /**
              * uid : 10350496
              * group_bit : 622816
@@ -173,7 +175,7 @@ public class TopicListBean {
             }
         }
 
-        public static class FBean {
+        public static class FBean implements JavaBean {
             /**
              * topped_topic :
              * sub_forums :
@@ -209,7 +211,7 @@ public class TopicListBean {
             }
         }
 
-        public static class TBean {
+        public static class TBean implements JavaBean {
 
             /**
              * tid : 11915941
@@ -257,7 +259,7 @@ public class TopicListBean {
              * 0 : 275
              * 2 : 测试版面
              */
-            private Map<String, String> parent;
+            public String parent;
 
             public Map<String, String> topic_misc_var;
 
@@ -405,14 +407,6 @@ public class TopicListBean {
                 this.tpcurl = tpcurl;
             }
 
-            public Map<String, String> getParent() {
-                return parent;
-            }
-
-            public void setParent(Map<String, String> parent) {
-                this.parent = parent;
-            }
-
             public PBean get__P() {
                 return __P;
             }
@@ -432,7 +426,7 @@ public class TopicListBean {
                         '}';
             }
 
-            public static class PBean {
+            public static class PBean implements JavaBean {
                 /**
                  * tid : 12937812
                  * pid : 253178256

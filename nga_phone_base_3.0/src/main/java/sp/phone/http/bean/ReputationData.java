@@ -1,7 +1,9 @@
 package sp.phone.http.bean;
 
 
-public class ReputationData {//给任务具体信息载入用的
+import gov.anzong.androidnga.common.base.JavaBean;
+
+public class ReputationData implements JavaBean {//给任务具体信息载入用的
 
     private String mName;
 

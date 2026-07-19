@@ -30,7 +30,7 @@ public class WebViewClientEx extends WebViewClient {
     private static final String NGA_USER_PROFILE_END = "&";
 
     private static final String[] SUFFIX_IMAGE = {
-            ".gif", ".jpg", ".png", ".jpeg", ".bmp"
+            ".gif", ".jpg", ".png", ".jpeg", ".bmp", ".webp"
     };
 
     private static final String NGA_READ = "/read.php?";
@@ -46,7 +46,7 @@ public class WebViewClientEx extends WebViewClient {
     private static String[] NGA_USER_PROFILE_START;
 
     static {
-        String[] domains = ContextUtils.getContext().getResources().getStringArray(R.array.nga_domain_no_http);
+        String[] domains = ContextUtils.getContext().getResources().getStringArray(gov.anzong.androidnga.common.R.array.nga_domain_no_http);
         sThreadPrefix = new String[domains.length];
         sReadPrefix = new String[domains.length];
         NGA_USER_PROFILE_START = new String[domains.length];

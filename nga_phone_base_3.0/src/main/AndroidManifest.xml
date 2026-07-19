@@ -8,22 +8,25 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" tools:node="remove"/>
 
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove"/>
+
     <application
         android:name=".NgaClientApp"
         android:anyDensity="false"
-        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/label_activity_main"
+        android:hardwareAccelerated="true"
         android:networkSecurityConfig="@xml/network_security_config"
         android:requestLegacyExternalStorage="true"
         android:preserveLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:theme="@android:style/Theme.Holo.Light"
+        android:theme="@style/AppThemeDayNight"
         tools:ignore="AllowBackup"
         tools:replace="android:label">
         <meta-data android:name="EasyGoClient" android:value="true" />
@@ -45,12 +48,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.LoginActivity"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/label_activity_login"
-            android:launchMode="singleTop"
-            android:windowSoftInputMode="adjustPan" />
+
         <activity android:name=".activity.ProfileActivity" />
         <activity
             android:name=".activity.PostActivity"
@@ -63,19 +61,10 @@
             android:name=".activity.SignPostActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".activity.MessagePostActivity"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
             android:name=".activity.SettingsActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/menu_setting"
             android:launchMode="singleTop" />
-        <activity
-            android:name=".activity.MessageListActivity"
-            android:label="@string/label_activity_message_list" />
-        <activity
-            android:name=".activity.MessageDetailActivity"
-            android:label="@string/label_activity_message_detail" />
 
         <activity
             android:name=".activity.TopicListActivity"
@@ -180,21 +169,21 @@
             </intent-filter>
         </activity>
         <activity android:name=".gallery.ImageZoomActivity" />
-        <activity android:name=".activity.ForumListActivity" />
-        <activity android:name=".activity.WebViewerActivity" />
         <activity android:name=".activity.RecentNotificationActivity" />
         <activity android:name=".activity.LauncherSubActivity" />
+
+        <activity android:name=".activity.compose.TemplateComposeActivity" />
+
         <activity
-            android:name=".activity.SearchActivity"
+            android:name=".activity.compose.SearchActivity"
             android:label="@string/search" />
+
         <activity
             android:name=".activity.AboutActivity"
             android:label="@string/title_about" />
 
         <activity android:name=".activity.TopicCacheActivity" android:label="我的缓存" />
         <activity android:name=".activity.ArticleCacheActivity" />
-
-        <activity android:name=".activity.WebViewActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

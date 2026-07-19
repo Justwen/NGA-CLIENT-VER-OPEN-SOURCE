@@ -9,7 +9,7 @@ import java.util.List;
 
 import sp.phone.mvp.model.entity.NotificationInfo;
 import sp.phone.mvp.model.entity.RecentReplyInfo;
-import sp.phone.util.NLog;
+import gov.anzong.androidnga.common.util.NLog;
 
 public class ForumNotificationFactory {
 

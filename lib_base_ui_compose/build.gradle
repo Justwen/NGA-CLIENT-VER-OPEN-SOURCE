@@ -1,0 +1,60 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    alias(libs.plugins.compose.compiler)
+}
+
+android {
+    namespace 'com.justwen.androidnga.ui.compose'
+    compileSdk project.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion project.minSdkVersion
+        targetSdkVersion project.targetSdkVersion
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+    buildFeatures {
+        compose true
+    }
+}
+
+dependencies {
+
+    api "androidx.activity:activity-compose:$compose_activity_version"
+    api "androidx.compose.ui:ui:$compose_ui_version"
+    api "androidx.compose.ui:ui-tooling-preview:$compose_ui_version"
+    api "androidx.compose.material:material:$compose_version"
+    debugApi "androidx.compose.ui:ui-tooling:$compose_ui_version"
+    implementation 'com.alibaba:arouter-api:1.5.2'
+
+    api "io.coil-kt:coil-compose:2.5.0"
+
+    api "androidx.compose.runtime:runtime-livedata:$compose_version"
+
+    implementation "com.google.accompanist:accompanist-systemuicontroller:0.16.0"
+    // paging
+    implementation "androidx.paging:paging-compose:$paging_version"
+
+    implementation project(':lib_base_service_api')
+    implementation project(':lib_base_common')
+
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
+}

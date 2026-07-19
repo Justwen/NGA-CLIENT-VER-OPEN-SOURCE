@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.ArrayMap;
 
+import com.justwen.androidnga.base.activity.ARouterConstants;
+
 import java.util.Map;
 
 import gov.anzong.androidnga.R;
 import gov.anzong.androidnga.Utils;
-import gov.anzong.androidnga.activity.WebViewActivity;
+import gov.anzong.androidnga.activity.fragment.ForumWebFragment;
 import gov.anzong.androidnga.base.util.ToastUtils;
 import gov.anzong.androidnga.common.PreferenceKey;
 import gov.anzong.androidnga.http.OnHttpCallBack;
@@ -24,6 +26,7 @@ import sp.phone.rxjava.BaseSubscriber;
 import sp.phone.rxjava.RxUtils;
 import sp.phone.task.LikeTask;
 import sp.phone.ui.fragment.ArticleListFragment;
+import sp.phone.util.ARouterUtils;
 import sp.phone.util.FunctionUtils;
 import sp.phone.util.StringUtils;
 
@@ -117,13 +120,14 @@ public class ArticleListPresenter extends BasePresenter<ArticleListFragment, Art
     }
 
     private void showWithWebView() {
-        if (mBaseView == null || !mBaseView.getContext().getSharedPreferences(PreferenceKey.PERFERENCE, Context.MODE_PRIVATE).getBoolean(mBaseView.getString(R.string.pref_show_with_webview), true)) {
+        if (mBaseView == null || !mBaseView.getContext().getSharedPreferences(PreferenceKey.PERFERENCE, Context.MODE_PRIVATE).getBoolean(mBaseView.getString(gov.anzong.androidnga.common.R.string.pref_show_with_webview), true)) {
             return;
         }
-        Intent intent = new Intent(mBaseView.getContext(), WebViewActivity.class);
-        intent.putExtra("url", getCurrentUrl());
-        intent.putExtra("title", mRequestParam.title);
-        mBaseView.getContext().startActivity(intent);
+        ARouterUtils.build(ARouterConstants.ACTIVITY_FRAGMENT_TEMPLATE)
+                .withString("url", getCurrentUrl())
+                .withString("title", mRequestParam.title)
+                .withString("fragment", ForumWebFragment.class.getName())
+                .navigation(mBaseView.getContext());
         mBaseView.finish();
     }
 

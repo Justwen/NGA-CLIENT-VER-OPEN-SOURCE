@@ -1,6 +1,8 @@
 package sp.phone.http.bean;
 
-public class User {
+import gov.anzong.androidnga.common.base.JavaBean;
+
+public class User implements JavaBean {
 
     private String userId;
     private String nickName;

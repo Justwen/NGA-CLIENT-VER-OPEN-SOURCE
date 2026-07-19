@@ -1,9 +1,12 @@
 package sp.phone.ui.fragment;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
@@ -88,6 +91,12 @@ public abstract class BaseFragment extends Fragment {
             }
         }
         super.onResume();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        view.setFitsSystemWindows(false);
     }
 
     protected FragmentManager getSupportFragmentManager() {

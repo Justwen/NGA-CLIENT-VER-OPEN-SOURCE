@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="pref_load_pic_strategy">pref_load_pic_strategy</string>
+    <string name="pref_load_avatar_strategy">pref_load_avatar_strategy</string>
+    <string name="pref_show_with_webview">pref_show_with_webview</string>
+    <string name="pref_local_debug_switch">pref_local_debug_switch</string>
+    <string name="pref_auto_check_in">pref_auto_check_in</string>
+    <string name="pref_check_in">pref_check_in</string>
+
+</resources>

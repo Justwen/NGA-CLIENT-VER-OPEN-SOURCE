@@ -18,6 +18,7 @@ import java.util.Locale;
 import java.util.zip.GZIPInputStream;
 
 import gov.anzong.androidnga.common.util.AppEnvironment;
+import gov.anzong.androidnga.common.util.NLog;
 
 public class HttpUtil {
 

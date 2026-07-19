@@ -1,6 +1,5 @@
 package sp.phone.mvp.presenter;
 
-import android.Manifest;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -19,11 +18,8 @@ import java.util.List;
 
 import gov.anzong.androidnga.R;
 import gov.anzong.androidnga.base.util.ContextUtils;
-import gov.anzong.androidnga.base.util.PermissionUtils;
 import gov.anzong.androidnga.base.util.ToastUtils;
-import gov.anzong.androidnga.common.util.EmoticonUtils;
 import gov.anzong.androidnga.http.OnHttpCallBack;
-import gov.anzong.androidnga.rxjava.BaseSubscriber;
 import sp.phone.mvp.contract.TopicPostContract;
 import sp.phone.mvp.model.TopicPostModel;
 import sp.phone.param.PostParam;
@@ -42,56 +38,25 @@ public class TopicPostPresenter extends BasePresenter<TopicPostFragment, TopicPo
 
     @Override
     public void setEmoticon(String emotion) {
-        String urlTemp = emotion.replaceAll("\\n", "");
-        if (urlTemp.contains("http")) {
-            urlTemp = urlTemp.substring(5, urlTemp.length() - 6);
-            String sourceFile = EmoticonUtils.getPathByURI(urlTemp);
-            try (InputStream is = mBaseView.getContext().getResources().getAssets().open(sourceFile)) {
-                if (is != null) {
-                    Bitmap bitmap = BitmapFactory.decodeStream(is);
-                    Drawable drawable = new BitmapDrawable(mBaseView.getContext().getResources(), bitmap);
-                    drawable.setBounds(0, 0, drawable.getIntrinsicWidth(),
-                            drawable.getIntrinsicHeight());
-                    SpannableString spanString = new SpannableString(emotion);
-                    ImageSpan span = new ImageSpan(drawable,
-                            ImageSpan.ALIGN_BASELINE);
-                    spanString.setSpan(span, 0, emotion.length(),
-                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    mBaseView.insertBodyText(spanString);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+        String[] emotions = emotion.split("-");
+        try (InputStream is = mBaseView.getContext().getResources().getAssets().open(emotions[1])) {
+            if (is != null) {
+                Bitmap bitmap = BitmapFactory.decodeStream(is);
+                Drawable drawable = new BitmapDrawable(mBaseView.getContext().getResources(), bitmap);
+                drawable.setBounds(0, 0, drawable.getIntrinsicWidth(),
+                        drawable.getIntrinsicHeight());
+                SpannableString spanString = new SpannableString(emotions[0]);
+                ImageSpan span = new ImageSpan(drawable,
+                        ImageSpan.ALIGN_BASELINE);
+                spanString.setSpan(span, 0, emotions[0].length(),
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                mBaseView.insertBodyText(spanString);
             }
-
-        } else {
-            int[] emotions = {1, 2, 3, 24, 25, 26, 27, 28, 29, 30, 32, 33, 34,
-                    35, 36, 37, 38, 39, 4, 40, 41, 42, 43, 5, 6, 7, 8};
-            for (int i = 0; i < 27; i++) {
-                if (emotion.indexOf("[s:" + emotions[i] + "]") == 0) {
-                    String sourceFile = "a" + emotions[i] + ".gif";
-                    try (InputStream is = mBaseView.getContext().getResources().getAssets().open(sourceFile)) {
-                        if (is != null) {
-                            Bitmap bitmap = BitmapFactory.decodeStream(is);
-                            Drawable drawable = new BitmapDrawable(bitmap);
-                            drawable.setBounds(0, 0, drawable.getIntrinsicWidth(),
-                                    drawable.getIntrinsicHeight());
-                            SpannableString spanString = new SpannableString(
-                                    emotion);
-                            ImageSpan span = new ImageSpan(drawable,
-                                    ImageSpan.ALIGN_BASELINE);
-                            spanString.setSpan(span, 0, emotion.length(),
-                                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                            mBaseView.insertBodyText(spanString);
-                        } else {
-                            mBaseView.insertBodyText(emotion);
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    break;
-                }
-            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+
     }//
 
     @Override
@@ -140,16 +105,7 @@ public class TopicPostPresenter extends BasePresenter<TopicPostFragment, TopicPo
 
     @Override
     public void showFilePicker() {
-        PermissionUtils.request(mBaseView, new BaseSubscriber<Boolean>(){
-
-            @Override
-            public void onNext(Boolean aBoolean) {
-                if (aBoolean != null && aBoolean) {
-                    mBaseView.showFilePicker();
-                }
-
-            }
-        }, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        mBaseView.showFilePicker();
     }
 
     @Override

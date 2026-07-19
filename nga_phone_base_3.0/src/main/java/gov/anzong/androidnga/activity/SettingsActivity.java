@@ -8,6 +8,7 @@ import android.view.ViewAnimationUtils;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import gov.anzong.androidnga.R;
 import gov.anzong.androidnga.base.util.ThemeUtils;
 import sp.phone.ui.fragment.SettingsFragment;
 
@@ -17,7 +18,9 @@ public class SettingsActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setToolbarEnabled(true);
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_settings);
         setupFragment();
         setupActionBar();
         if (sRecreated) {
@@ -33,7 +36,7 @@ public class SettingsActivity extends BaseActivity {
         Fragment settingsFragment = fm.findFragmentByTag(SettingsFragment.class.getSimpleName());
         if (settingsFragment == null) {
             settingsFragment = new SettingsFragment();
-            fm.beginTransaction().replace(android.R.id.content, settingsFragment, SettingsFragment.class.getSimpleName()).commit();
+            fm.beginTransaction().replace(R.id.container, settingsFragment, SettingsFragment.class.getSimpleName()).commit();
         }
     }
 

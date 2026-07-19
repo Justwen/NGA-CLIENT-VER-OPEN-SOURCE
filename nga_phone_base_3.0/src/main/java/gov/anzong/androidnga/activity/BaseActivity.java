@@ -1,30 +1,37 @@
 package gov.anzong.androidnga.activity;
 
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
+import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.graphics.Insets;
+import androidx.core.view.OnApplyWindowInsetsListener;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.justwen.androidnga.cloud.CloudServerManager;
 
 import gov.anzong.androidnga.R;
-import gov.anzong.androidnga.base.common.SwipeBackHelper;
 import gov.anzong.androidnga.base.util.ContextUtils;
 import gov.anzong.androidnga.base.util.PreferenceUtils;
 import gov.anzong.androidnga.common.PreferenceKey;
 import sp.phone.common.NotificationController;
 import sp.phone.common.PhoneConfiguration;
 import sp.phone.theme.ThemeManager;
-import sp.phone.util.NLog;
+import gov.anzong.androidnga.common.util.NLog;
 
 /**
  * Created by liuboyu on 16/6/28.
@@ -35,73 +42,78 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     private boolean mToolbarEnabled;
 
-    private boolean mHardwareAcceleratedEnabled = true;
+    private boolean mComposeEnabled;
 
-    private SwipeBackHelper mSwipeBackHelper;
+    private int mNaviBarHeight;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         mConfig = PhoneConfiguration.getInstance();
-        updateWindowFlag();
         updateThemeUi();
-        setSwipeBackEnable(PreferenceUtils.getData(PreferenceKey.KEY_SWIPE_BACK, false));
-        onCreateBeforeSuper(savedInstanceState);
         super.onCreate(savedInstanceState);
-        onCreateAfterSuper(savedInstanceState);
         ThemeManager.getInstance().initializeWebTheme(this);
 
-        if (mSwipeBackHelper != null) {
-            mSwipeBackHelper.onCreate(this);
-        }
-
         try {
-            if (ThemeManager.getInstance().isNightMode()) {
+            if (ThemeManager.getInstance().isNightMode() && !mComposeEnabled) {
                 getWindow().setNavigationBarColor(ContextUtils.getColor(R.color.background_color));
             }
         } catch (Exception e) {
             NLog.e("set navigation bar color exception occur: " + e);
         }
+        enableEdge2Edge();
     }
 
-    protected void setSwipeBackEnable(boolean enable) {
-        if (!enable) {
-            mSwipeBackHelper = null;
-        } else if (mSwipeBackHelper == null) {
-            mSwipeBackHelper = new SwipeBackHelper();
+    public void setComposeEnabled(boolean composeEnabled) {
+        mComposeEnabled = composeEnabled;
+    }
+
+    private void enableEdge2Edge() {
+        View contentView = findViewById(android.R.id.content);
+        if (mToolbarEnabled && !mComposeEnabled && contentView != null) {
+            ViewCompat.setOnApplyWindowInsetsListener(contentView, new OnApplyWindowInsetsListener() {
+                @NonNull
+                @Override
+                public WindowInsetsCompat onApplyWindowInsets(@NonNull View v, @NonNull WindowInsetsCompat insets) {
+                    if (getWindow().getDecorView().findViewById(R.id.status_bar) == null) {
+                        Insets stateBars = insets.getInsets(WindowInsetsCompat.Type.statusBars());
+                        ViewGroup parent = (ViewGroup) contentView.getParent();
+                        View statusView = new View(contentView.getContext());
+                        statusView.setId(R.id.status_bar);
+                        statusView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, stateBars.top));
+                        statusView.setBackgroundColor(ThemeManager.getInstance().getPrimaryColor(contentView.getContext()));
+                        parent.addView(statusView, 0);
+
+                        Insets navaBars = insets.getInsets(WindowInsetsCompat.Type.navigationBars());
+                        mNaviBarHeight = navaBars.bottom;
+                        contentView.setPadding(0, 0, 0, navaBars.bottom);
+                    }
+                    return insets;
+                }
+            });
         }
     }
 
-    @Override
-    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        if (mSwipeBackHelper != null) {
-            mSwipeBackHelper.onPostCreate();
+    // Android15上开启EdgeToEdge后adjustResize会失效，这里临时做下兼容
+    protected void compatActivityAdjustResize(Activity activity) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+            return;
         }
-    }
-
-    @Override
-    public <T extends View> T findViewById(int id) {
-        T t = super.findViewById(id);
-        if (t == null && mSwipeBackHelper != null) {
-            t = mSwipeBackHelper.findViewById(id);
-        }
-        return t;
-    }
-
-    protected void onCreateBeforeSuper(@Nullable Bundle savedInstanceState) {
-
-    }
-
-    protected void onCreateAfterSuper(@Nullable Bundle savedInstanceState) {
-
+        View content = ((ViewGroup) activity.findViewById(android.R.id.content)).getChildAt(0);
+        final Rect r = new Rect();
+        content.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+            content.getWindowVisibleDisplayFrame(r);
+            int screenHeight = content.getRootView().getHeight();
+            int keyboardHeight = screenHeight - r.bottom - mNaviBarHeight;
+            if (keyboardHeight > screenHeight / 4) { // 键盘高度超过屏幕1/4
+                content.setPadding(0, 0, 0, keyboardHeight);
+            } else {
+                content.setPadding(0, 0, 0, 0);
+            }
+        });
     }
 
     protected void setToolbarEnabled(boolean enabled) {
         mToolbarEnabled = enabled;
-    }
-
-    protected void setHardwareAcceleratedEnabled(boolean enabled) {
-        mHardwareAcceleratedEnabled = enabled;
     }
 
     public void setupToolbar(Toolbar toolbar) {
@@ -134,15 +146,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void updateThemeUi() {
         ThemeManager tm = ThemeManager.getInstance();
         setTheme(tm.getTheme(mToolbarEnabled));
-    }
-
-    protected void updateWindowFlag() {
-        int flag = 0;
-
-        if (mHardwareAcceleratedEnabled) {
-            flag = flag | WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED;
-        }
-        getWindow().addFlags(flag);
     }
 
     @Deprecated
@@ -189,6 +192,12 @@ public abstract class BaseActivity extends AppCompatActivity {
             e.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public void setContentView(View view) {
+        super.setContentView(view);
+        view.setFitsSystemWindows(!mToolbarEnabled);
     }
 
     @Override

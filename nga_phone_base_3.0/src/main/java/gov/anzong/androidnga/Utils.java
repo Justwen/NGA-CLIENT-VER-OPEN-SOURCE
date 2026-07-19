@@ -7,7 +7,7 @@ import android.provider.MediaStore;
 
 import java.io.File;
 
-import sp.phone.util.ForumUtils;
+import gov.anzong.androidnga.common.util.ForumUtils;
 
 /**
  * Created by liuboyu on 2015/8/25.

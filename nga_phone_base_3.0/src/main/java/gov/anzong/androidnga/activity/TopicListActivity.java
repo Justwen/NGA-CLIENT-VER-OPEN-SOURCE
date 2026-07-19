@@ -12,9 +12,9 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 
 import gov.anzong.androidnga.R;
+import gov.anzong.androidnga.activity.compose.board.ForumBoardViewModel;
 import gov.anzong.androidnga.arouter.ARouterConstants;
 import gov.anzong.androidnga.ui.fragment.TopicListSimpleFragment;
-import sp.phone.mvp.model.BoardModel;
 import sp.phone.param.ParamKey;
 import sp.phone.param.TopicListParam;
 import sp.phone.ui.fragment.TopicFavoriteFragment;
@@ -69,7 +69,7 @@ public class TopicListActivity extends BaseActivity {
         }
 
         if (requestParam != null && TextUtils.isEmpty(requestParam.title)) {
-            requestParam.title = BoardModel.getInstance().getBoardName(requestParam.fid,requestParam.stid);
+            requestParam.title = ForumBoardViewModel.INSTANCE.getBoardName(requestParam.fid,requestParam.stid);
         }
         return requestParam;
     }

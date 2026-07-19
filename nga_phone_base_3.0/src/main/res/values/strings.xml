@@ -27,6 +27,7 @@
     <string name="changesignhint">(这里填你喜欢的签名内容)</string>
     <string name="commit">提交</string>
     <string name="cancel">取消</string>
+    <string name="ok">确认</string>
     <string name="drawer_open">打开侧边栏</string>
     <string name="drawer_close">关闭侧边栏</string>
     <string name="largesttablenum">7</string> <!-- 数据库数量,现在有7个库 -->
@@ -134,7 +135,6 @@
     <string name="sample_user_level">级别:骷髅党</string>
     <string name="split">菜单按钮在下面(4.0以上)</string>
     <string name="replysplit">发帖按钮在下面(4.0以上)</string>
-    <string name="ha">硬件加速(4.0以上)</string>
     <string name="fullscreenmode">全屏模式</string>
     <string name="kitwebview">列表卡顿修复(测试)</string>
     <string name="kitwebviewinfo">如果你的手机在主题帖中不卡顿,请不要启用本功能!</string>
@@ -338,12 +338,10 @@
     <string name="setting_title_material_theme">主题风格</string>
     <string name="setting_title_bottom_tab">主题页面显示底部标签页</string>
     <string name="setting_title_left_hand">左手模式</string>
-    <string name="setting_title_hardware_accelerated">硬件加速</string>
-    <string name="setting_summary_hardware_accelerated">主题详情页面闪退可尝试关闭此项</string>
     <string name="summary_show_with_webview">加载出错时默认使用内置浏览器打开</string>
     <string name="title_show_with_webview">使用内置浏览器打开</string>
     <string name="setting_title_sort_by_post">按发帖顺序排序</string>
-    <string name="setting_title_user">用户管理</string>
+    <string name="setting_title_user">账号管理</string>
     <string name="setting_title_black_list">黑名单</string>
     <string name="setting_title_filter_sub_board">过滤版主固定的渣帖子</string>
     <string name="setting_nga_domain">NGA域名</string>

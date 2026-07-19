@@ -151,6 +151,10 @@ public class ThemeManager implements SharedPreferences.OnSharedPreferenceChangeL
         return toolbarEnabled ? mAppThemes[index] : mAppThemesActionBar[index];
     }
 
+    public int getThemeIndex() {
+        return mThemeIndex;
+    }
+
     public void applyAboutTheme(AppCompatActivity activity) {
         activity.setTheme(ThemeConstants.THEME_ACTIVITY_ABOUT[isNightMode() ? 0 : mThemeIndex]);
         activity.getDelegate().setLocalNightMode(isNightMode() ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);

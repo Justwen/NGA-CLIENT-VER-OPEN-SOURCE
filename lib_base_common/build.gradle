@@ -1,0 +1,73 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+}
+
+android {
+    namespace 'gov.anzong.androidnga.common'
+
+    compileSdk project.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion project.minSdkVersion
+        targetSdkVersion project.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        consumerProguardFiles "consumer-rules.pro"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    buildFeatures {
+        buildConfig = true
+    }
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    implementation "com.google.android.material:material:$androidx_material_version"
+    implementation "androidx.appcompat:appcompat:$appcompat_version"
+
+    api 'com.github.tbruyelle:rxpermissions:0.10.2'
+    api "io.reactivex.rxjava2:rxjava:$rxjava_version"
+    implementation 'me.imid.swipebacklayout.lib:library:1.1.0'
+    implementation 'net.steamcrafted:load-toast:1.0.12'
+    implementation 'com.github.GrenderG:Toasty:1.4.1'
+    api('com.zhouyou:signseekbar:1.0.6') {
+        exclude group: 'com.android.support'
+    }
+    api('com.nshmura:recyclertablayout:1.5.0') {
+        exclude group: 'com.android.support'
+    }
+
+    api "com.alibaba:fastjson:$fastJson_version"
+    api "io.reactivex.rxjava2:rxandroid:$project.rxAndroid"
+
+    implementation 'commons-io:commons-io:2.11.0'
+
+    api("com.google.guava:guava:29.0-android")
+
+    // kotlin
+    implementation "androidx.core:core-ktx:$core_ktx_version"
+
+    //retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+
+    //noinspection KtxExtensionAvailable
+    implementation "androidx.preference:preference:$preference_version"
+}

@@ -12,9 +12,10 @@
             android:title="@string/setting_nga_domain" />
 
         <PreferenceScreen
-            android:fragment="sp.phone.ui.fragment.SettingsUserFragment"
-            android:key="pref_user"
+            android:fragment="com.justwent.androidnga.bu.user.UserManagerFragment"
+            android:key="pref_user_compose"
             android:title="@string/setting_title_user" />
+
 
         <SwitchPreference
             android:defaultValue="false"
@@ -23,13 +24,13 @@
 
         <SwitchPreference
             android:defaultValue="false"
-            android:key="left_hand"
-            android:title="@string/setting_title_left_hand" />
+            android:key="key_night_mode_follow_system"
+            android:title="夜间模式跟随系统"/>
 
         <SwitchPreference
             android:defaultValue="false"
-            android:key="swipe_back"
-            android:title="@string/setting_title_swipe_back" />
+            android:key="left_hand"
+            android:title="@string/setting_title_left_hand" />
 
         <SwitchPreference
             android:defaultValue="true"
@@ -62,6 +63,11 @@
             android:title="@string/setting_title_size" />
 
         <PreferenceScreen
+            android:fragment="gov.anzong.androidnga.activity.compose.filter.FilterWordFragment"
+            android:key="pref_black_list_new"
+            android:title="屏蔽规则" />
+
+        <PreferenceScreen
             android:key="key_clear_cache"
             android:title="清除缓存"/>
 
@@ -79,19 +85,9 @@
             android:key="filter_sub_board"
             android:title="@string/setting_title_filter_sub_board" />
 
-        <PreferenceScreen
-            android:fragment="sp.phone.ui.fragment.FilterKeywordsFragment"
-            android:key="pref_keyword"
-            android:title="@string/filter_keywords" />
-
     </PreferenceCategory>
 
     <PreferenceCategory android:title="主题详情设置">
-
-        <PreferenceScreen
-            android:fragment="sp.phone.ui.fragment.SettingsBlackListFragment"
-            android:key="pref_black_list"
-            android:title="@string/setting_title_black_list" />
 
         <ListSummaryPreference
             android:key="@string/pref_load_pic_strategy"

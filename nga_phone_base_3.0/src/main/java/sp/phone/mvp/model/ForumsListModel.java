@@ -2,12 +2,14 @@ package sp.phone.mvp.model;
 
 import java.util.ArrayList;
 
+import gov.anzong.androidnga.common.base.JavaBean;
+
 /**
  * 获取版块列表
  * Created by elrond on 2017/9/29.
  */
 
-public class ForumsListModel {
+public class ForumsListModel implements JavaBean {
     public int code;
     public String msg;
     public ArrayList<Result> result;
@@ -36,7 +38,7 @@ public class ForumsListModel {
         this.result = result;
     }
 
-    public static class Result {
+    public static class Result implements JavaBean {
         public String id;
         public String name;
         public ArrayList<Group> groups;
@@ -66,7 +68,7 @@ public class ForumsListModel {
         }
     }
 
-    public static class Group {
+    public static class Group implements JavaBean {
         public String id;
         public String name;
         public ArrayList<Forum> forums;
@@ -96,7 +98,7 @@ public class ForumsListModel {
         }
     }
 
-    public static class Forum {
+    public static class Forum implements JavaBean {
         public int id;
         public String name;
 

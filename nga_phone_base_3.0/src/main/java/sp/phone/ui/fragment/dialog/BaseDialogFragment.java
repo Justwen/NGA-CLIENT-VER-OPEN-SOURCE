@@ -12,7 +12,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
 import gov.anzong.androidnga.util.ToastUtils;
-import sp.phone.util.NLog;
+import gov.anzong.androidnga.common.util.NLog;
 
 /**
  * Created by Justwen on 2018/2/16.

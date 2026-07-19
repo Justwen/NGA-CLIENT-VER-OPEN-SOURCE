@@ -41,7 +41,7 @@ public class CategoryBean implements JavaBean {
         this.sub = sub;
     }
 
-    public static class SubBean {
+    public static class SubBean implements JavaBean {
         /**
          * name : 魔兽世界
          * content : [{"fid":7,"name":"艾泽拉斯议事厅","info":"魔兽主讨论区","nameS":"议事厅","bit":1},{"fid":230,"name":"艾泽拉斯风纪委员会","info":"曝光违背公认准则的行为","nameS":"风纪委员会"},{"fid":310,"name":"前瞻资讯","info":"新版本与高阶讨论","infoS":"高阶讨论"},{"fid":624,"name":"经典旧世","info":"怀旧服讨论"},{"fid":323,"name":"国服以外"},{"fid":586,"name":"争霸艾泽拉斯","info":"新版本信息汇集"}]
@@ -66,7 +66,7 @@ public class CategoryBean implements JavaBean {
             this.content = content;
         }
 
-        public static class ContentBean {
+        public static class ContentBean implements JavaBean {
             /**
              * fid : 7
              * name : 艾泽拉斯议事厅

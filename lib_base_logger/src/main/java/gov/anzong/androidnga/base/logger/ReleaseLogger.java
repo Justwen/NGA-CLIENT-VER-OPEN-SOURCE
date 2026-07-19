@@ -1,16 +1,12 @@
 package gov.anzong.androidnga.base.logger;
 
-import android.util.Log;
-
 public class ReleaseLogger implements ILogger {
+
     @Override
-    public String d(String tag, String msg) {
-        Log.d(tag, msg);
-        return msg;
+    public void d(String tag, String msg) {
     }
 
     @Override
-    public String printStackTrace(Throwable throwable) {
-        return "";
+    public void d(String tag, String msg, Throwable throwable) {
     }
 }

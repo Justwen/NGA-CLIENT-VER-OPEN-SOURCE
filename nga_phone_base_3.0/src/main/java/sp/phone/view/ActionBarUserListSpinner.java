@@ -47,7 +47,7 @@ public class ActionBarUserListSpinner extends androidx.appcompat.widget.AppCompa
 
     @Override
     protected void onFinishInflate() {
-        if (mUserManager.getActiveUser() != null) {
+        if (UserManagerImpl.getInstance().hasValidUser()) {
             setSelection(mUserManager.getActiveUserIndex());
         }
         super.onFinishInflate();

@@ -42,6 +42,8 @@ public class PostActivity extends BaseActivity {
         mPostFragment = new TopicPostFragment();
         mPostFragment.setArguments(bundle);
         mPostFragment.setHasOptionsMenu(true);
+        compatActivityAdjustResize(this);
+
         getSupportFragmentManager().beginTransaction().replace(R.id.content, mPostFragment).commit();
     }
 

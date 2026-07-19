@@ -3,7 +3,7 @@ package sp.phone.mvp.model;
 import com.trello.rxlifecycle2.LifecycleProvider;
 import com.trello.rxlifecycle2.android.FragmentEvent;
 
-import sp.phone.util.ForumUtils;
+import gov.anzong.androidnga.common.util.ForumUtils;
 
 /**
  * Created by Justwen on 2017/11/25.

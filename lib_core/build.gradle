@@ -1,9 +1,11 @@
 plugins {
     id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
 }
 
 android {
-    compileSdkVersion project.compileSdkVersion
+    namespace 'gov.anzong.androidnga.core'
+    compileSdk project.compileSdkVersion
 
     defaultConfig {
         minSdkVersion project.minSdkVersion
@@ -16,13 +18,16 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
     compileOptions {
-        sourceCompatibility = 1.8
-        targetCompatibility = 1.8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = '17'
     }
 }
 
@@ -30,5 +35,11 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
 
-    compileOnly project(':lib_common')
+    implementation "androidx.annotation:annotation:1.1.0"
+    compileOnly project(':lib_base_common')
+
+    implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
+
+    implementation(libs.fastjson2)
+
 }

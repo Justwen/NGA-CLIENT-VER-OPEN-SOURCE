@@ -8,11 +8,11 @@ import com.alibaba.fastjson.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import gov.anzong.androidnga.Utils;
+import gov.anzong.androidnga.base.logger.Logger;
 import gov.anzong.androidnga.core.HtmlConvertFactory;
+import gov.anzong.androidnga.common.util.NLog;
 import gov.anzong.androidnga.core.data.AttachmentData;
 import gov.anzong.androidnga.core.data.CommentData;
 import gov.anzong.androidnga.core.data.HtmlData;
@@ -20,14 +20,12 @@ import sp.phone.common.ForumConstants;
 import sp.phone.common.PhoneConfiguration;
 import sp.phone.common.UserManagerImpl;
 import sp.phone.http.bean.Attachment;
-import sp.phone.http.bean.DiceData;
 import sp.phone.http.bean.ThreadData;
 import sp.phone.http.bean.ThreadRowInfo;
 import sp.phone.mvp.model.entity.ThreadPageInfo;
 import sp.phone.theme.ThemeManager;
 import sp.phone.util.FunctionUtils;
 import sp.phone.util.HttpUtil;
-import sp.phone.util.NLog;
 import sp.phone.util.StringUtils;
 
 /**
@@ -73,7 +71,7 @@ public class ArticleConvertFactory {
             data.setRowNum(data.getRowList().size());
         } catch (Exception e) {
             NLog.e(TAG, "can not parse :\n" + js);
-            e.printStackTrace();
+            Logger.d(e);
         }
         return data;
     }
@@ -137,16 +135,6 @@ public class ArticleConvertFactory {
         }
         List<String> imageUrls = new ArrayList<>();
         String ngaHtml = HtmlConvertFactory.convert(buildHtmlData(row), imageUrls);
-        DiceData arg = new DiceData();
-        arg.setSeed(2110032.0);
-        arg.setAuthorId(row.getAuthorid());
-        arg.settId(row.getTid());
-        arg.setpId(row.getPid());
-        arg.setId("postcontent0");
-        arg.setTxt(ngaHtml);
-        String argsId = arg.getId() != null ? arg.getId() : randDigi("bbcode", 10000);
-        arg.setArgsId(argsId);
-        ngaHtml = getRealDice(arg);
         row.getImageUrls().addAll(imageUrls);
         row.setFormattedHtmlData(ngaHtml);
     }
@@ -163,6 +151,9 @@ public class ArticleConvertFactory {
         htmlData.setSubject(row.getSubject());
         htmlData.setShowImage(PhoneConfiguration.getInstance().isImageLoadEnabled());
         htmlData.setNGAHost(Utils.getNGAHost());
+        htmlData.pid = String.valueOf(row.pid);
+        htmlData.tid = String.valueOf(row.tid);
+        htmlData.uid = String.valueOf(row.getAuthorid());
         if (row.getAttachs() != null) {
             List<AttachmentData> attachments = new ArrayList<>();
             for (Map.Entry<String, Attachment> entry : row.getAttachs().entrySet()) {
@@ -304,91 +295,6 @@ public class ArticleConvertFactory {
                     break;
                 }
             }
-        }
-    }
-
-    public static String randDigi(String p, int l) {
-        return p + Math.floor(Math.random() * l);
-    }
-
-    public static double rnd(DiceData arg) {
-        double seed = arg.getSeed();
-        if (arg.getArgsId() != null) {
-            if (arg.getRndSeed() == 0.0) {
-                arg.setRndSeed(arg.getAuthorId() + arg.gettId() + arg.getpId() +
-                        (arg.gettId() > 10246184 || arg.getpId() > 200188932 ? arg.getSeedOffset() : 0));
-                if (arg.getRndSeed() == 0.0) arg.setRndSeed(Math.floor(Math.random() * 10000));
-            }
-            arg.setRndSeed((arg.getRndSeed() * 9301 + 49297) % 233280);
-            return arg.getRndSeed() / 233280.0;
-        }
-        seed = (seed * 9301 + 49297) % 233280;
-        arg.setSeed(seed);
-        return seed / 233280.0;
-    }
-
-    // 计算掷骰子结果
-    public static String getRealDice(DiceData arg) {
-        String reg = "\\[dice].+?\\[/dice\\]";
-        int sum = 0;
-        String txt = arg.getTxt();
-        Pattern r = Pattern.compile(reg);
-        Matcher m = r.matcher(txt);
-        if (!m.find()) return txt;
-        do {
-            StringBuilder diceStr = new StringBuilder();
-            String $0 = m.group(0);
-            assert $0 != null;
-            String $1 = $0.replace("[dice]", "").replace("[/dice]", "");
-            String rr = $1;
-            $1 = "+" + $1;
-            String[] strs = $1.split("\\+");
-            StringBuilder rx = new StringBuilder();
-            for (String str : strs) {
-                if (str.length() > 0) {
-                    String[] sstrs = str.split("d");
-                    int num = 0;
-                    int covers = 0;
-                    if (sstrs.length > 1) {
-                        if (sstrs[0].length() > 0) {
-                            num = parseInt(sstrs[0],1);
-                        } else {
-                            num = 1;
-                        }
-                        covers = parseInt(sstrs[1],0);
-                        if (num > 10 || covers > 100000) {
-                            sum = -1;
-                            diceStr.append("+OUT OF LIMIT");
-                        }
-                        for (int j = 0; j < num; j++) {
-                            String argsId = "postcomment__510458140";
-                            arg.setArgsId(argsId);
-                            double a = rnd(arg);
-                            double rand = Math.floor(a * covers) + 1;
-                            rx.append("+d").append(covers).append("(").append(Math.round(rand)).append(")");
-                            if (sum != -1) sum += rand;
-                        }
-                    } else {
-                        covers = parseInt(sstrs[0].trim(),0);
-                        sum += covers;
-                        rx.append("+").append(covers);
-                    }
-                }
-            }
-            diceStr.append("<p><b>ROLL:").append(rr).append("</b>=").append(rx.substring(1)).append("=<b>").append(sum).append("</b></p>");
-            sum = 0;
-            txt = txt.replaceFirst(reg, diceStr.toString());
-            m = r.matcher(txt);
-        } while (m.find());
-        return txt;
-    }
-
-
-    private static int parseInt(String str, int defaultWhenFailed) {
-        try {
-            return Integer.parseInt(str);
-        }catch (Exception e){
-            return defaultWhenFailed;
         }
     }
 

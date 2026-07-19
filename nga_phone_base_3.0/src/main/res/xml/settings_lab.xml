@@ -3,12 +3,6 @@
 
     <SwitchPreference
         android:defaultValue="true"
-        android:key="hardware_accelerated"
-        android:summary="@string/setting_summary_hardware_accelerated"
-        android:title="@string/setting_title_hardware_accelerated" />
-
-    <SwitchPreference
-        android:defaultValue="true"
         android:title="@string/title_show_with_webview"
         android:summary="@string/summary_show_with_webview"
         android:key="@string/pref_show_with_webview"/>
@@ -24,5 +18,15 @@
         android:summary="日志存放在/Download/nga_open_source/log/"
         android:iconSpaceReserved="false"
         android:title="本地日志" />
+
+    <Preference
+        android:key="@string/pref_check_in"
+        android:title="每日签到"/>
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="@string/pref_auto_check_in"
+        android:title="自动签到"
+        android:iconSpaceReserved="false" />
 
 </PreferenceScreen>

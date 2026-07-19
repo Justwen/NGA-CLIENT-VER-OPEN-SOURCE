@@ -10,7 +10,7 @@ import java.io.InputStream;
 
 import sp.phone.util.HttpUtil;
 import sp.phone.util.ImageUtils;
-import sp.phone.util.NLog;
+import gov.anzong.androidnga.common.util.NLog;
 
 public class ChangeAvatarLoadTask extends AsyncTask<String, Integer, Bitmap> {
 

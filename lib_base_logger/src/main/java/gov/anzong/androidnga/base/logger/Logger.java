@@ -1,80 +1,66 @@
 package gov.anzong.androidnga.base.logger;
 
-public class Logger implements ILogger {
+public class Logger {
 
-    private static final Logger INSTANCE = new Logger();
+    private static ILogger sLoggerDelegate = new ReleaseLogger();
 
-    private ILogger mLoggerDelegate;
+    private static boolean sBuildDebugMode;
 
-    private boolean mLocalDebug;
 
-    private Logger() {
-        updateLogger();
+    public static void setBuildDebugMode(boolean buildDebugMode) {
+        sBuildDebugMode = buildDebugMode;
+        initLogger();
     }
 
-    public boolean isLocalDebug() {
-        return mLocalDebug;
-    }
-
-    public void setLocalDebug(boolean localDebug) {
-        mLocalDebug = localDebug;
-    }
-
-    public void setLogger(ILogger logger) {
-        if (logger != null) {
-            if (mLoggerDelegate != null) {
-                mLoggerDelegate.clear();
-            }
-            mLoggerDelegate = logger;
+    public static void setLogger(ILogger logger) {
+        if (sLoggerDelegate != null) {
+            sLoggerDelegate.close();
         }
-    }
-
-    public static Logger getInstance() {
-        return INSTANCE;
-    }
-
-    @Override
-    public String d(String tag, String msg) {
-        return mLoggerDelegate.d(tag, msg);
-    }
-
-    @Override
-    public String d(int msg) {
-        return mLoggerDelegate.d(msg);
-    }
-
-    @Override
-    public String d(float msg) {
-        return mLoggerDelegate.d(msg);
-    }
-
-    @Override
-    public String d(Object msg) {
-        return mLoggerDelegate.d(msg);
-    }
-
-    @Override
-    public String d(boolean msg) {
-        return mLoggerDelegate.d(msg);
-    }
-
-    @Override
-    public String d() {
-        return mLoggerDelegate.d();
-    }
-
-    @Override
-    public void clear() {
-        mLoggerDelegate.clear();
-    }
-
-    public void updateLogger() {
-        if (mLocalDebug) {
-            setLogger(new LocalDebugLogger());
-        } else if (BuildConfig.DEBUG) {
-            setLogger(new DebugLogger());
+        if (logger == null) {
+            sLoggerDelegate = new DebugLogger();
         } else {
-            setLogger(new ReleaseLogger());
+            sLoggerDelegate = logger;
         }
     }
+
+    private static void initLogger() {
+        if (sBuildDebugMode) {
+            sLoggerDelegate = new DebugLogger();
+        } else {
+            sLoggerDelegate = new ReleaseLogger();
+        }
+    }
+
+    public static void d(String tag, String msg, Throwable t) {
+        sLoggerDelegate.d(tag, msg, t);
+    }
+
+    public static void d(String tag, String msg) {
+        sLoggerDelegate.d(tag, msg);
+    }
+
+    public static void d(String msg) {
+        sLoggerDelegate.d(msg);
+    }
+
+    public static void d(int msg) {
+        sLoggerDelegate.d(msg);
+    }
+
+    public void d(float msg) {
+        sLoggerDelegate.d(msg);
+    }
+
+    public static void d(boolean msg) {
+        sLoggerDelegate.d(msg);
+    }
+
+    public static void d(Throwable throwable) {
+        sLoggerDelegate.d(throwable);
+    }
+
+    public static void d() {
+        sLoggerDelegate.d();
+    }
+
 }

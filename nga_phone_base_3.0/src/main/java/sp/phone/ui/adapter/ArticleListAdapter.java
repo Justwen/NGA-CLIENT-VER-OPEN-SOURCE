@@ -26,6 +26,7 @@ import butterknife.ButterKnife;
 import gov.anzong.androidnga.R;
 import gov.anzong.androidnga.arouter.ARouterConstants;
 import gov.anzong.androidnga.base.util.ContextUtils;
+import gov.anzong.androidnga.base.util.DeviceUtils;
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -239,14 +240,12 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
             intent.putExtra("tid", tidStr);
             intent.putExtra("action", "reply");
 
-            if (UserManagerImpl.getInstance().getActiveUser() != null) {// 登入了才能发
+            if (UserManagerImpl.getInstance().hasValidUser()) {// 登入了才能发
                 intent.setClass(
                         ContextUtils.getContext(),
                         PhoneConfiguration.getInstance().postActivityClass);
             } else {
-                intent.setClass(
-                        ContextUtils.getContext(),
-                        PhoneConfiguration.getInstance().loginActivityClass);
+                ActivityUtils.startLoginActivity(mContext);
             }
             return intent;
         }
@@ -312,6 +311,8 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
     private View.OnClickListener mOpposeListener;
     private View.OnClickListener mMenuTogglerListener;
 
+    private boolean mWifiConnected;
+
     public class ArticleViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.tv_nickName)
@@ -371,6 +372,7 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
             HtmlUtils.initStaticStrings(mContext);
         }
         mLayoutInflater = LayoutInflater.from(mContext);
+        mWifiConnected = DeviceUtils.isWifiConnected(context);
     }
 
     public void setTopicOwner(String topicOwner) {
@@ -533,7 +535,7 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
 
     private void onBindAvatarView(ImageView avatarIv, ThreadRowInfo row) {
         final String avatarUrl = FunctionUtils.parseAvatarUrl(row.getJs_escap_avatar());
-        final boolean downImg = PhoneConfiguration.getInstance().isAvatarLoadEnabled();
+        final boolean downImg = PhoneConfiguration.getInstance().isAvatarLoadEnabled(mWifiConnected);
 
         ImageUtils.loadRoundCornerAvatar(avatarIv, avatarUrl, !downImg);
     }
