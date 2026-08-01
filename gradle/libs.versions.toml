@@ -1,5 +1,5 @@
 [versions]
-gradle = "8.6.1"
+gradle = "8.9.1"
 kotlin = "2.0.21"
 fastjson2 = "2.0.59.android8"
 
