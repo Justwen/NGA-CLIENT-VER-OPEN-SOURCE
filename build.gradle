@@ -30,7 +30,7 @@ buildscript {
 allprojects {
     repositories {
         maven { url 'https://maven.aliyun.com/repository/google' }
-        //TODO Remove all dependencies in jcenter
+        //TODO jcenter 已永久关闭；此镜像仅为 signseekbar/recyclertablayout/load-toast 三个历史库保留，清理后移除
         maven { url 'https://maven.aliyun.com/repository/public' }
         maven { url 'https://www.jitpack.io' }
         google()
@@ -44,9 +44,9 @@ task clean(type: Delete) {
 }
 
 project.ext {
-    minSdkVersion = 30
-    targetSdkVersion = 35
-    compileSdkVersion = 35
+    minSdkVersion = 34
+    targetSdkVersion = 36
+    compileSdkVersion = 36
     appVersionName = '4.2.1'
     appVersionCode = 4021
 

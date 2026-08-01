@@ -44,4 +44,5 @@ dependencies {
     implementation project(':lib_base_service_api')
     implementation "com.alibaba:arouter-api:$arouter_version"
     kapt "com.alibaba:arouter-compiler:$arouter_version"
+    testImplementation 'junit:junit:4.13.2'
 }
