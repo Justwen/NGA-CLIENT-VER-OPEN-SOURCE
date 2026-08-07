@@ -32,7 +32,7 @@ public class ForumImageDecoder implements IForumDecoder {
 
     private static final String REPLACE_IMG_WITH_HTTP = "<a href='$1'><img src='$1'></a>";
 
-    private static final String NGA_ATTACHMENT_HOST = "img.nga.178.com";
+    private static final String NGA_ATTACHMENT_HOST = "img.nga.cn";
 
     @Override
     public String decode(String content) {
