@@ -22,7 +22,7 @@ import gov.anzong.androidnga.common.util.NLog;
 
 public class HttpUtil {
 
-    public static final String NGA_ATTACHMENT_HOST = "img.nga.178.com"; //img.ngacn.cc";
+    public static final String NGA_ATTACHMENT_HOST = "img.nga.cn";
     public static final String Servlet_phone = "/servlet/PhoneServlet";
     public static final String Servlet_timer = "/servlet/TimerServlet";
     private static final String[] servers = {"https://nga.178.com", "https://bbs.ngacn.cc"};

@@ -37,6 +37,7 @@ dependencies {
 
     implementation "androidx.annotation:annotation:1.1.0"
     compileOnly project(':lib_base_common')
+    testImplementation project(':lib_base_common')
 
     implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
 
