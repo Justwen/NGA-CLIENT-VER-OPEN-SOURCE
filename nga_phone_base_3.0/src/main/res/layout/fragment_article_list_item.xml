@@ -102,6 +102,14 @@
 
     </FrameLayout>
 
+    <LinearLayout
+        android:id="@+id/video_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp" />
+
 
     <LinearLayout
         android:layout_width="match_parent"

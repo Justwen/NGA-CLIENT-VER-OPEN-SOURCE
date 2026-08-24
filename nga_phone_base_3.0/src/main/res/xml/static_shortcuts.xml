@@ -11,13 +11,13 @@
         <intent
             android:action="android.intent.action.MAIN"
             android:targetClass="gov.anzong.androidnga.activity.MainActivity"
-            android:targetPackage="gov.anzong.androidnga"/>
+            android:targetPackage="@string/app_package_name"/>
 
         <intent
             android:action="android.intent.action.MAIN"
             android:data="http://bbs.ngacn.cc/thread.php?fid=-7"
             android:targetClass="gov.anzong.androidnga.activity.TopicListActivity"
-            android:targetPackage="gov.anzong.androidnga"/>
+            android:targetPackage="@string/app_package_name"/>
     </shortcut>
 
     <shortcut
@@ -30,13 +30,13 @@
         <intent
             android:action="android.intent.action.MAIN"
             android:targetClass="gov.anzong.androidnga.activity.MainActivity"
-            android:targetPackage="gov.anzong.androidnga"/>
+            android:targetPackage="@string/app_package_name"/>
 
         <intent
             android:action="android.intent.action.MAIN"
             android:data="http://bbs.ngacn.cc/thread.php?fid=7"
             android:targetClass="gov.anzong.androidnga.activity.TopicListActivity"
-            android:targetPackage="gov.anzong.androidnga"/>
+            android:targetPackage="@string/app_package_name"/>
     </shortcut>
 
 </shortcuts>

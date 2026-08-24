@@ -29,6 +29,8 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 public class RetrofitHelper {
 
+    private static final String NGA_ANDROID_USER_AGENT = "Nga_Official/80024(Android12)";
+
     private Retrofit mRetrofit;
 
     private static final String URL_NGA_BASE_CC = "https://bbs.ngacn.cc/";
@@ -109,12 +111,7 @@ public class RetrofitHelper {
             if (cookie == null && mCookieProvider != null) {
                 cookie = mCookieProvider.getCookie();
             }
-            Request request = original.newBuilder()
-                    .header("Cookie", cookie)
-                    .header("User-Agent", mUserAgent)
-                    .header("X-User-Agent", "Nga_Official")
-                    .method(original.method(), original.body())
-                    .build();
+            Request request = addNgaHeaders(original, cookie, mUserAgent);
             return chain.proceed(request);
         });
         builder.addInterceptor(chain -> {
@@ -134,10 +131,24 @@ public class RetrofitHelper {
         });
         builder.addInterceptor(chain -> {
             Request request = chain.request();
-            Logger.d(request.toString());
+            Logger.d(toSafeLogMessage(request));
             return chain.proceed(request);
         });
         return builder;
+    }
+
+    static Request addNgaHeaders(Request original, String cookie, String userAgent) {
+        return original.newBuilder()
+                .header("Cookie", cookie)
+                .header("User-Agent", userAgent)
+                .header("X-User-Agent", NGA_ANDROID_USER_AGENT)
+                .method(original.method(), original.body())
+                .build();
+    }
+
+    static String toSafeLogMessage(Request request) {
+        return request.method() + " " + request.url().scheme() + "://"
+                + request.url().host() + request.url().encodedPath();
     }
 
     public static RetrofitHelper getInstance() {

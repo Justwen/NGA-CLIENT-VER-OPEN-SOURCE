@@ -3,6 +3,7 @@ package sp.phone.mvp.model.convert;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 import java.util.ArrayList;
@@ -10,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 
 import gov.anzong.androidnga.Utils;
-import gov.anzong.androidnga.base.logger.Logger;
 import gov.anzong.androidnga.core.HtmlConvertFactory;
 import gov.anzong.androidnga.common.util.NLog;
 import gov.anzong.androidnga.core.data.AttachmentData;
@@ -40,6 +40,119 @@ public class ArticleConvertFactory {
         return parseJsonThreadPage(js);
     }
 
+    public static ThreadData getAppApiArticleInfo(String js) {
+        String legacyJson = convertAppApiToLegacyJson(js);
+        return legacyJson == null ? null : parseJsonThreadPage(legacyJson);
+    }
+
+    public static String getAppApiErrorMessage(String js) {
+        try {
+            JSONObject root = JSON.parseObject(js);
+            return root.getIntValue("code") == 0 ? null : root.getString("msg");
+        } catch (Exception ignored) {
+            return null;
+        }
+    }
+
+    static String convertAppApiToLegacyJson(String js) {
+        try {
+            JSONObject root = JSON.parseObject(js);
+            if (root.getIntValue("code") != 0) {
+                return null;
+            }
+
+            JSONArray posts = root.getJSONArray("result");
+            if (posts == null || posts.isEmpty()) {
+                return null;
+            }
+
+            JSONObject rows = new JSONObject();
+            JSONObject users = new JSONObject();
+            JSONObject groups = new JSONObject();
+            for (int i = 0; i < posts.size(); i++) {
+                JSONObject row = new JSONObject();
+                row.putAll(posts.getJSONObject(i));
+
+                JSONObject author = row.getJSONObject("author");
+                if (author != null) {
+                    int authorId = author.getIntValue("uid");
+                    row.put("authorid", authorId);
+                    row.put("author", author.getString("username"));
+                    users.put(String.valueOf(authorId), author);
+
+                    String memberId = author.getString("memberid");
+                    String memberName = author.getString("member");
+                    if (memberId != null && memberName != null && !groups.containsKey(memberId)) {
+                        JSONObject group = new JSONObject();
+                        group.put("0", memberName);
+                        groups.put(memberId, group);
+                    }
+                }
+
+                Object attachments = row.remove("attches");
+                JSONObject attachmentMap = normalizeAppApiAttachments(attachments);
+                if (!attachmentMap.isEmpty()) {
+                    row.put("attachs", attachmentMap);
+                }
+                if (row.containsKey("comments") && !row.containsKey("comment")) {
+                    row.put("comment", row.get("comments"));
+                }
+                row.put("score", row.getIntValue("vote_good"));
+                rows.put(String.valueOf(i), row);
+            }
+            users.put("__GROUPS", groups);
+
+            JSONObject firstPost = posts.getJSONObject(0);
+            JSONObject topic = new JSONObject();
+            topic.put("tid", firstPost.getIntValue("tid"));
+            topic.put("fid", root.getIntValue("fid"));
+            topic.put("author", root.getString("tauthor"));
+            topic.put("authorid", root.getIntValue("tauthorid"));
+            topic.put("subject", root.getString("tsubject"));
+            topic.put("replies", Math.max(0, root.getIntValue("vrows") - 1));
+            topic.put("page", root.getIntValue("currentPage"));
+            topic.put("postdate", firstPost.getIntValue("postdatetimestamp"));
+            topic.put("type", firstPost.getIntValue("type"));
+            topic.put("board", root.getString("forum_name"));
+
+            JSONObject data = new JSONObject();
+            data.put("__ROWS", root.getIntValue("vrows"));
+            data.put("__R__ROWS", posts.size());
+            data.put("__R", rows);
+            data.put("__U", users);
+            data.put("__T", topic);
+            JSONObject global = new JSONObject();
+            global.put("_ATTACH_BASE_VIEW", root.getString("attachPrefix"));
+            data.put("__GLOBAL", global);
+
+            JSONObject legacyRoot = new JSONObject();
+            legacyRoot.put("data", data);
+            return legacyRoot.toJSONString();
+        } catch (Exception e) {
+            NLog.e(TAG, e.getClass().getSimpleName());
+            return null;
+        }
+    }
+
+    private static JSONObject normalizeAppApiAttachments(Object attachments) {
+        if (attachments instanceof JSONObject) {
+            return (JSONObject) attachments;
+        }
+
+        JSONObject result = new JSONObject();
+        if (attachments instanceof JSONArray) {
+            JSONArray array = (JSONArray) attachments;
+            for (int i = 0; i < array.size(); i++) {
+                JSONObject attachment = array.getJSONObject(i);
+                if (attachment != null) {
+                    String key = attachment.getString("aid");
+                    result.put(key == null ? String.valueOf(i) : key, attachment);
+                }
+            }
+        }
+        return result;
+    }
+
     private static ThreadData parseJsonThreadPage(String js) {
         ThreadData data = null;
         try {
@@ -58,7 +171,7 @@ public class ArticleConvertFactory {
                     .replaceAll("\"alterinfo\":\"\\[(\\w|\\s)+\\]\\s+\",", ""); //部分页面打不开的问题
 //            NLog.e(js);
             JSONObject obj = (JSONObject) JSON.parseObject(js).get("data");
-            NLog.d(TAG, "js = :\n" + js);
+            NLog.d(TAG, "parsed response: " + js.length() + " chars");
             if (obj == null) {
                 return null;
             }
@@ -70,8 +183,8 @@ public class ArticleConvertFactory {
             data.set__ROWS(allRows);
             data.setRowNum(data.getRowList().size());
         } catch (Exception e) {
-            NLog.e(TAG, "can not parse :\n" + js);
-            Logger.d(e);
+            NLog.e(TAG, "can not parse response: " + js.length() + " chars");
+            NLog.e(TAG, e.getClass().getSimpleName());
         }
         return data;
     }
@@ -126,6 +239,9 @@ public class ArticleConvertFactory {
     }
 
     private static String getAttachmentHost(JSONObject global) {
+        if (global == null) {
+            return null;
+        }
         String data =  global.getString("_ATTACH_BASE_VIEW");
         if (TextUtils.isEmpty(data)) {
             return null;

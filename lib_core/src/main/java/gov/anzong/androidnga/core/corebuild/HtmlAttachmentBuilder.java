@@ -1,6 +1,7 @@
 package gov.anzong.androidnga.core.corebuild;
 
 import java.util.List;
+import java.util.Locale;
 
 import gov.anzong.androidnga.core.data.AttachmentData;
 import gov.anzong.androidnga.core.data.HtmlData;
@@ -19,18 +20,6 @@ public class HtmlAttachmentBuilder implements IHtmlBuild {
                 .append(url)
                 .append("'>")
                 .append("nga_audio.mp3</a>")
-                .append("</td></tr>");
-        return ret;
-    }
-
-    private static StringBuilder buildVideoAttachment(StringBuilder ret, AttachmentData attachment) {
-        String url = attachment.getAttachUrl();
-        ret.append("<tr><td><a href='http://")
-                .append(attachment.getAttachmentHost())
-                .append("/attachments/")
-                .append(url)
-                .append("'>")
-                .append("nga_video.mp4</a>")
                 .append("</td></tr>");
         return ret;
     }
@@ -75,8 +64,9 @@ public class HtmlAttachmentBuilder implements IHtmlBuild {
             String attachUrl = attach.getAttachUrl();
             if (attachUrl.contains("mp3")) {
                 ret = buildAudioAttachment(ret, attach);
-            } else if (attachUrl.contains("mp4")) {
-                ret = buildVideoAttachment(ret,attach);
+            } else if (attachUrl != null && attachUrl.toLowerCase(Locale.US).contains("mp4")) {
+                // 视频附件由帖子列表中的原生播放器渲染，避免 WebView 下载链接。
+                continue;
             } else {
                 imageAttachmentCount++;
                 buildImageAttachment(ret, attach, imageAttachmentCount, images);

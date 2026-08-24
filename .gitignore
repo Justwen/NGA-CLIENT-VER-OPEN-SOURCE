@@ -7,6 +7,9 @@
 build
 *.iml
 local.properties
+keystore.properties
+*.jks
+*.keystore
 *.DS_Store
 gradle.properties
 /gradle

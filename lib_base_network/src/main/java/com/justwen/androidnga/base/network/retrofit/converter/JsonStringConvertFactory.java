@@ -38,7 +38,7 @@ public class JsonStringConvertFactory extends Converter.Factory {
         public String convert(ResponseBody responseBody) {
             try (InputStream is = responseBody.byteStream()) {
                 String body = IOUtils.toString(is, "GBK");
-                Logger.d(body);
+                Logger.d("HTTP response body: " + body.length() + " chars");
                 return body;
             } catch (IOException e) {
                 return "";

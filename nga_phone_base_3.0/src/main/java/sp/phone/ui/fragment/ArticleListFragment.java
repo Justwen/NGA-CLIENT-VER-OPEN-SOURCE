@@ -303,6 +303,22 @@ public class ArticleListFragment extends BaseMvpFragment<ArticleListPresenter> i
     }
 
     @Override
+    public void onPause() {
+        if (mArticleAdapter != null) {
+            mArticleAdapter.pauseVideo();
+        }
+        super.onPause();
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (mArticleAdapter != null) {
+            mArticleAdapter.releaseVideo();
+        }
+        super.onDestroyView();
+    }
+
+    @Override
     public void startPostActivity(Intent intent) {
         if (!StringUtils.isEmpty(UserManagerImpl.getInstance().getUserName())) {// 登入了才能发
             intent.setClass(getActivity(), PhoneConfiguration.getInstance().postActivityClass);

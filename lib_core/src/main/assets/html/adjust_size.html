@@ -6,6 +6,22 @@
 <link rel='stylesheet' type='text/css' href='file:///android_asset/html/style.css'/>
 <link rel='stylesheet' type='text/css' href='file:///android_asset/html/style_light.css'/>
 <body>
-<div style="font-size:24px">主题详情页字体大小</div>
+<div style="font-size:24px">主题详情页正文预览：文字间距、行高和左右边距会在这里实时显示。</div>
+<script type="text/javascript">
+    function updateArticlePreview(lineHeight, horizontalMargin, letterSpacing) {
+        document.body.style.lineHeight = lineHeight + "%";
+        document.body.style.paddingLeft = horizontalMargin + "px";
+        document.body.style.paddingRight = horizontalMargin + "px";
+        document.body.style.letterSpacing = (letterSpacing / 100) + "em";
+    }
+
+    function getPreviewValue(name, defaultValue) {
+        var match = new RegExp("[?&]" + name + "=([^&]*)").exec(window.location.search);
+        return match ? parseInt(match[1], 10) : defaultValue;
+    }
+
+    updateArticlePreview(getPreviewValue("lineHeight", 120),
+            getPreviewValue("horizontalMargin", 4), getPreviewValue("letterSpacing", 0));
+</script>
 </body>
 </html>

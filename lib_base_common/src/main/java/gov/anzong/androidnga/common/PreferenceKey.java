@@ -91,6 +91,12 @@ public class PreferenceKey {
 
     public static final String KEY_WEBVIEW_TEXT_ZOOM = "key_webview_zoom_size";
 
+    public static final String KEY_ARTICLE_LINE_HEIGHT = "key_article_line_height";
+
+    public static final String KEY_ARTICLE_HORIZONTAL_MARGIN = "key_article_horizontal_margin";
+
+    public static final String KEY_ARTICLE_LETTER_SPACING = "key_article_letter_spacing";
+
     public static final String KEY_PRELOAD_BOARD_VERSION = "key_preload_board_version";
 
     public static final String KEY_LOAD_AVATAR_STRATEGY = "pref_load_avatar_strategy";

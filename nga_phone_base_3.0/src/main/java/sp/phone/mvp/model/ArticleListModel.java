@@ -8,6 +8,7 @@ import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 import gov.anzong.androidnga.base.util.ContextUtils;
@@ -75,26 +76,50 @@ public class ArticleListModel extends BaseModel implements ArticleListContract.M
     @Override
     public void loadPage(ArticleListParam param, Map<String, String> header, OnHttpCallBack<ThreadData> callBack) {
         String url = getUrl(param);
+        String appApiUrl = getAvailableDomain() + "/app_api.php?__lib=post&__act=list";
+        Map<String, String> appApiFields = new HashMap<>();
+        appApiFields.put("page", String.valueOf(param.page));
+        if (param.tid != 0) {
+            appApiFields.put("tid", String.valueOf(param.tid));
+        }
+        if (param.pid != 0) {
+            appApiFields.put("pid", String.valueOf(param.pid));
+        }
+        if (param.authorId != 0) {
+            appApiFields.put("authorid", String.valueOf(param.authorId));
+        }
         mService.get(url, header)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.newThread())
                 .compose(getLifecycleProvider().<String>bindUntilEvent(FragmentEvent.DETACH))
-                .map(new Function<String, ThreadData>() {
+                .flatMap(new Function<String, Observable<ThreadData>>() {
                     @Override
-                    public ThreadData apply(@NonNull String s) throws Exception {
+                    public Observable<ThreadData> apply(@NonNull String s) throws Exception {
                         long time = System.currentTimeMillis();
                         ThreadData data = ArticleConvertFactory.getArticleInfo(s);
                         NLog.e(TAG, "time = " + (System.currentTimeMillis() - time));
-                        if (data == null) {
-                            String errorMsg = ErrorConvertFactory.getErrorMessage(s);
-                            if (errorMsg != null) {
-                                throw new Exception(errorMsg);
-                            } else {
-                                throw new ServerException("NGA后台抽风了，请尝试右上角菜单中的使用内置浏览器打开");
-                            }
-                        } else {
-                            return data;
+                        if (data != null) {
+                            return Observable.just(data);
                         }
+
+                        String errorMsg = ErrorConvertFactory.getErrorMessage(s);
+                        if (errorMsg != null) {
+                            throw new Exception(errorMsg);
+                        }
+
+                        return mService.post(appApiUrl, header, appApiFields)
+                                .map(appApiResponse -> {
+                                    ThreadData fallbackData = ArticleConvertFactory
+                                            .getAppApiArticleInfo(appApiResponse);
+                                    if (fallbackData != null) {
+                                        return fallbackData;
+                                    }
+                                    String fallbackError = ArticleConvertFactory
+                                            .getAppApiErrorMessage(appApiResponse);
+                                    throw new ServerException(fallbackError == null
+                                            ? "NGA后台返回的数据不完整，请稍后重试"
+                                            : fallbackError);
+                                });
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())

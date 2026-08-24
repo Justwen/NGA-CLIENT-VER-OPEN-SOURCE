@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NGA客户端社区版</string>
+    <string name="label_activity_main">NGA客户端社区版</string>
+    <string name="start_title">NGA客户端社区版</string>
+    <string name="app_package_name" translatable="false">gov.anzong.androidnga.community</string>
+</resources>

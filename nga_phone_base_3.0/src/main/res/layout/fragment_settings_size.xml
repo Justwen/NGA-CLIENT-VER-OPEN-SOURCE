@@ -151,6 +151,72 @@
                 app:ssb_track_color="@color/text_color_disabled"
                 app:ssb_track_size="3dp" />
 
+            <TextView
+                style="?android:attr/textAppearanceListItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="16dp"
+                android:text="@string/article_line_height"
+                android:textColor="@color/text_color_selector" />
+
+            <gov.anzong.androidnga.base.widget.SeekBarEx
+                android:id="@+id/seek_article_line_height"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:ssb_second_track_color="?colorPrimary"
+                app:ssb_second_track_size="3dp"
+                app:ssb_show_sign="true"
+                app:ssb_sign_color="?colorAccent"
+                app:ssb_thumb_radius="8dp"
+                app:ssb_thumb_radius_on_dragging="10dp"
+                app:ssb_track_color="@color/text_color_disabled"
+                app:ssb_track_size="3dp" />
+
+            <TextView
+                style="?android:attr/textAppearanceListItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="16dp"
+                android:text="@string/article_horizontal_margin"
+                android:textColor="@color/text_color_selector" />
+
+            <gov.anzong.androidnga.base.widget.SeekBarEx
+                android:id="@+id/seek_article_horizontal_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:ssb_second_track_color="?colorPrimary"
+                app:ssb_second_track_size="3dp"
+                app:ssb_show_sign="true"
+                app:ssb_sign_color="?colorAccent"
+                app:ssb_thumb_radius="8dp"
+                app:ssb_thumb_radius_on_dragging="10dp"
+                app:ssb_track_color="@color/text_color_disabled"
+                app:ssb_track_size="3dp" />
+
+            <TextView
+                style="?android:attr/textAppearanceListItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="16dp"
+                android:text="@string/article_letter_spacing"
+                android:textColor="@color/text_color_selector" />
+
+            <gov.anzong.androidnga.base.widget.SeekBarEx
+                android:id="@+id/seek_article_letter_spacing"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:ssb_second_track_color="?colorPrimary"
+                app:ssb_second_track_size="3dp"
+                app:ssb_show_sign="true"
+                app:ssb_sign_color="?colorAccent"
+                app:ssb_thumb_radius="8dp"
+                app:ssb_thumb_radius_on_dragging="10dp"
+                app:ssb_track_color="@color/text_color_disabled"
+                app:ssb_track_size="3dp" />
+
             <sp.phone.view.webview.LocalWebView
                 android:id="@+id/webview"
                 android:layout_marginTop="8dp"

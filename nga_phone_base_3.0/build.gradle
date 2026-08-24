@@ -5,14 +5,12 @@ plugins {
     alias(libs.plugins.compose.compiler)
 }
 
-def static getDate() {
-    def date = new Date()
-    def formattedDate = date.format('yyyyMMddHHmm')
-    return formattedDate
-}
-
-def isJenkins() {
-    return project.hasProperty('IS_JENKINS') && IS_JENKINS == 'true'
+def communitySigningPropertiesFile = rootProject.file('keystore.properties')
+def communitySigningProperties = new Properties()
+if (communitySigningPropertiesFile.exists()) {
+    communitySigningPropertiesFile.withInputStream {
+        communitySigningProperties.load(it)
+    }
 }
 
 android {
@@ -20,15 +18,13 @@ android {
     compileSdk project.compileSdkVersion
 
     signingConfigs {
-        signingConfig {
-            if (isJenkins()) {
-                storeFile file('../../android19910914.keystore')
-            } else {
-                storeFile file('..\\keystore\\android19910914.keystore')
+        community {
+            if (!communitySigningProperties.isEmpty()) {
+                storeFile rootProject.file(communitySigningProperties['storeFile'])
+                storePassword communitySigningProperties['storePassword']
+                keyAlias communitySigningProperties['keyAlias']
+                keyPassword communitySigningProperties['keyPassword']
             }
-            storePassword '19910914'
-            keyAlias 'android.keystore'
-            keyPassword '19910914'
         }
     }
 
@@ -67,6 +63,8 @@ android {
 
     buildTypes {
         release {
+            applicationIdSuffix '.community'
+            versionNameSuffix '-community.5'
             debuggable false
             jniDebuggable false
             renderscriptDebuggable false
@@ -74,7 +72,7 @@ android {
             minifyEnabled true
             proguardFiles 'proguard.cfg'
             zipAlignEnabled true
-            signingConfig signingConfigs.signingConfig
+            signingConfig signingConfigs.community
         }
         debug {
             applicationIdSuffix '.debug'
@@ -102,7 +100,7 @@ android {
     android.applicationVariants.all { variant ->
         variant.outputs.all {
             if (outputFile != null && outputFileName.endsWith('.apk') && variant.buildType.name == "release") {
-                outputFileName = "nga_phone_${defaultConfig.versionName}_${getDate()}.apk"
+                outputFileName = "nga_phone_${variant.versionName}.apk"
             }
         }
     }
@@ -118,6 +116,8 @@ dependencies {
     implementation "com.google.android.material:material:$androidx_material_version"
     implementation "androidx.cardview:cardview:1.0.0"
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+    implementation 'androidx.media3:media3-exoplayer:1.7.1'
+    implementation 'androidx.media3:media3-ui:1.7.1'
 
     implementation 'commons-io:commons-io:2.11.0'
 

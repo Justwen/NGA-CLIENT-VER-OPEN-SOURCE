@@ -190,6 +190,30 @@ public class PhoneConfiguration extends PreferenceKey implements SharedPreferenc
         PreferenceUtils.putData(PreferenceKey.KEY_WEBVIEW_TEXT_ZOOM, textRoom);
     }
 
+    public int getArticleLineHeight() {
+        return PreferenceUtils.getData(PreferenceKey.KEY_ARTICLE_LINE_HEIGHT, Constants.ARTICLE_LINE_HEIGHT_DEFAULT);
+    }
+
+    public void setArticleLineHeight(int lineHeight) {
+        PreferenceUtils.putData(PreferenceKey.KEY_ARTICLE_LINE_HEIGHT, lineHeight);
+    }
+
+    public int getArticleHorizontalMargin() {
+        return PreferenceUtils.getData(PreferenceKey.KEY_ARTICLE_HORIZONTAL_MARGIN, Constants.ARTICLE_HORIZONTAL_MARGIN_DEFAULT);
+    }
+
+    public void setArticleHorizontalMargin(int margin) {
+        PreferenceUtils.putData(PreferenceKey.KEY_ARTICLE_HORIZONTAL_MARGIN, margin);
+    }
+
+    public int getArticleLetterSpacing() {
+        return PreferenceUtils.getData(PreferenceKey.KEY_ARTICLE_LETTER_SPACING, Constants.ARTICLE_LETTER_SPACING_DEFAULT);
+    }
+
+    public void setArticleLetterSpacing(int letterSpacing) {
+        PreferenceUtils.putData(PreferenceKey.KEY_ARTICLE_LETTER_SPACING, letterSpacing);
+    }
+
     public boolean useSolidColorBackground() {
         return ContextUtils.getSharedPreferences(PreferenceKey.PERFERENCE).getBoolean(PreferenceKey.KEY_USE_SOLID_COLOR_BG, true);
     }

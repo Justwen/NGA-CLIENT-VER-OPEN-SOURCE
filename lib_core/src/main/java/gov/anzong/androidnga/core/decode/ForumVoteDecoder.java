@@ -60,7 +60,7 @@ public class ForumVoteDecoder implements IForumDecoder {
 
                 content = StringUtils.replaceAll(content, "\\[style color #444 margin 0 1 1 1 float left clear both]", "<div style=\"display:inline-block;color:#444;margin:0em 1em 1em 1em;float:left;clear:both;\">");
 
-                content = StringUtils.replaceAll(content, "\\[comment game_title_image]\\[style border-radius 0.3 width 50 src .", "<img src=\"https://img.nga.178.com/attachments");
+                content = StringUtils.replaceAll(content, "\\[comment game_title_image]\\[style border-radius 0.3 width 50 src .", "<img src=\"https://img.nga.cn/attachments");
 
                 content = StringUtils.replaceAll(content, "]\\[/style]\\[/comment game_title_image]", "\" style=\"display:inline-block;border-radius:0.3em;width:50em;\">");
 
