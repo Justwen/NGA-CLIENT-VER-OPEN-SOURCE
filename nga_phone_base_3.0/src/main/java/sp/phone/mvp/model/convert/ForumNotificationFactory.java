@@ -1,8 +1,10 @@
 package sp.phone.mvp.model.convert;
 
 
+import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
+import com.alibaba.fastjson2.JSONReader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +24,7 @@ public class ForumNotificationFactory {
         List<RecentReplyInfo> infoList = new ArrayList<>();
 
         try {
-            JSONObject obj = JSONObject.parseObject(content);
+            JSONObject obj = JSON.parseObject(content, JSONReader.Feature.AllowUnQuotedFieldNames);
             obj = obj.getJSONObject("data").getJSONObject("0");
             JSONArray array = obj.getJSONArray("0");
             int unread = obj.getInteger("unread");

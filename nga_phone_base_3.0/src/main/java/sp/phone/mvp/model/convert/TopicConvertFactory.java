@@ -36,7 +36,7 @@ public class TopicConvertFactory {
         }
 
         // 去掉 jdata 字段，值可能包含转义引号、\x5C 等非法转义导致解析失败，且该字段无实际用途
-        js = js.replaceAll("\"jdata\":\"(?:\\\\.|[^\"\\\\])*\",", "");
+        js = js.replaceAll("(?s)\"jdata\"\\s*:\\s*(\"\"|\"\\{.*?\\}\")\\s*,?\\s*", "");
 
         TopicListBean topicListBean = JSON.parseObject(js, TopicListBean.class);
 

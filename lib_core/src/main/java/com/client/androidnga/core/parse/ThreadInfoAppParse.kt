@@ -53,6 +53,10 @@ class ThreadInfoAppParse {
                 rawContent = result.content.ifEmpty {
                     result.subject
                 }
+                subject = result.subject
+                if (i == 0 && subject.isNullOrEmpty() && threadBean.currentPage == 1) {
+                    subject = threadBean.tsubject
+                }
                 clientModel = ThreadParseUtils.parseClientModel(result.from_client)
             }
             parseUserInfo(postInfo, result, iHtmlConfigService)
