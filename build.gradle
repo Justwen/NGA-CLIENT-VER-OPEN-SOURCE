@@ -43,11 +43,11 @@ task clean(type: Delete) {
 }
 
 project.ext {
-    minSdkVersion = 30
+    minSdkVersion = 31
     targetSdkVersion = 36
     compileSdkVersion = 36
-    appVersionName = '5.0.2'
-    appVersionCode = 5002
+    appVersionName = '5.1.0'
+    appVersionCode = 5010
 
     rxAndroid = '2.1.1'
 
