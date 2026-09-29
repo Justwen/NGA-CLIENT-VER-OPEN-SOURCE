@@ -20,31 +20,13 @@ public interface UserManager {
 
     void setActiveUser(int index);
 
-    int toggleUser(boolean isNext);
-
-    void addUser(User user);
-
-    void addUser(String uid, String cid, String name);
-
-    void removeUser(int index);
-
-    void swapUser(int from, int to);
-
-    // User 类辅助接口
-
     String getCookie();
-
-    String getCookie(User user);
 
     String getNextCookie();
 
     String getUserId();
 
-    String getCid();
-
     String getUserName();
-
-    void setAvatarUrl(int userId, String url);
 
     // 黑名单
 

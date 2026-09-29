@@ -1,6 +1,7 @@
 [versions]
 gradle = "8.6.1"
-kotlin = "2.0.21"
+kotlin = "2.1.21"
+kotlin-coroutines = "1.10.2"
 fastjson2 = "2.0.59.android8"
 fastjson2-kotlin = "2.0.21.android"
 annotation = "1.10.0"
@@ -14,8 +15,9 @@ compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "
 [libraries]
 #kotlin
 kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
-kotlin-stdlib ={group="org.jetbrains.kotlin", name="kotlin-stdlib", version.ref="kotlin"}
-kotlin-reflect ={group="org.jetbrains.kotlin", name="kotlin-reflect", version.ref="kotlin"}
+kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
+kotlin-reflect = { group = "org.jetbrains.kotlin", name = "kotlin-reflect", version.ref = "kotlin" }
+kotlin-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
 
 gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
 

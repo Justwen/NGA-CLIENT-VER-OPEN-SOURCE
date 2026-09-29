@@ -30,4 +30,6 @@ android {
 dependencies {
     testImplementation 'junit:junit:4.13.2'
     api 'com.alibaba:arouter-api:1.5.2'
+    // kotlin
+    api libs.kotlin.coroutines.core
 }

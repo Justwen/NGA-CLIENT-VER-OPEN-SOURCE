@@ -57,11 +57,6 @@ public class UserManagerImpl implements sp.phone.common.UserManager {
         return UserManager.INSTANCE.hasValidUser();
     }
 
-    @Override
-    public String getCid() {
-        User user = UserManager.INSTANCE.getActiveUser();
-        return user != null ? user.getCid() : "";
-    }
 
     @Override
     public String getUserName() {
@@ -69,10 +64,6 @@ public class UserManagerImpl implements sp.phone.common.UserManager {
         return user != null ? user.getNickName() : "";
     }
 
-    @Override
-    public void setAvatarUrl(int userId, String url) {
-        UserManager.INSTANCE.setAvatarUrl(String.valueOf(userId), url);
-    }
 
     @Override
     public String getUserId() {
@@ -85,34 +76,6 @@ public class UserManagerImpl implements sp.phone.common.UserManager {
         UserManager.INSTANCE.setActiveIndex(index);
     }
 
-    @Override
-    public int toggleUser(boolean isNext) {
-        return UserManager.INSTANCE.toggleUser(isNext);
-
-    }
-
-    private int getNextActiveIndex(boolean isNext) {
-        return UserManager.INSTANCE.getNextActiveIndex(isNext);
-    }
-
-    @Override
-    public void addUser(User user) {
-        UserManager.INSTANCE.addUser(user);
-    }
-
-    @Override
-    public void addUser(String uid, String cid, String name) {
-        User user = new User();
-        user.setCid(cid);
-        user.setUserId(uid);
-        user.setNickName(name);
-        addUser(user);
-    }
-
-    @Override
-    public void removeUser(int index) {
-        UserManager.INSTANCE.removeUser(index);
-    }
 
     @Override
     public String getCookie() {
@@ -120,27 +83,8 @@ public class UserManagerImpl implements sp.phone.common.UserManager {
     }
 
     @Override
-    public String getCookie(User user) {
-        return UserManager.INSTANCE.getCookie(user);
-    }
-
-    @Override
     public String getNextCookie() {
         return UserManager.INSTANCE.getNextCookie();
-    }
-
-    @Override
-    public void swapUser(int from, int to) {
-        //if (from < to) {
-        //    for (int i = from; i < to; i++) {
-        //        Collections.swap(mUserList, i, i + 1);
-        //    }
-        //} else {
-        //    for (int i = from; i > to; i--) {
-        //        Collections.swap(mUserList, i, i - 1);
-        //    }
-        //}
-        //commit();
     }
 
     @Override

@@ -1,19 +1,32 @@
 package com.justwent.androidnga.bu
 
+import android.app.AlertDialog
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.justwen.androidnga.base.service.api.IUserManagerService
 import gov.anzong.androidnga.base.util.PreferenceUtils
+import gov.anzong.androidnga.base.util.ToastUtils
 import gov.anzong.androidnga.base.utils.ThreadProvider
 import gov.anzong.androidnga.common.PreferenceKey
 import gov.anzong.androidnga.db.AppDatabase
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import sp.phone.common.User
 
-object UserManager {
+object UserManager : IUserManagerService {
 
     private val activeIndexLiveData: MutableLiveData<Int> = MutableLiveData(0)
 
     private var userListLiveData: MutableLiveData<List<User>> = MutableLiveData(mutableListOf())
 
     private var activeUser: User? = null
+
+    private val _accountState = MutableStateFlow(0)
+
+    override val activeAccountIndexState: StateFlow<Int>
+        get() = _accountState.asStateFlow()
 
     init {
         var index = PreferenceUtils.getData(PreferenceKey.USER_ACTIVE_INDEX, 0)
@@ -25,6 +38,7 @@ object UserManager {
                 }
                 activeIndexLiveData.postValue(index)
                 activeUser = it[index]
+                _accountState.value = index
             }
         }
     }
@@ -57,6 +71,7 @@ object UserManager {
     public fun setActiveIndex(index: Int) {
         activeIndexLiveData.value = index
         activeUser = userListLiveData.value!![index]
+        _accountState.value = index
         PreferenceUtils.putData(PreferenceKey.USER_ACTIVE_INDEX, index)
     }
 
@@ -96,8 +111,38 @@ object UserManager {
         saveUsers()
     }
 
-    fun addUser(uid: String, cid: String, name: String) {
-        val user = User(uid, name, cid)
+    override fun showUserSwitchDialog(
+        context: Context,
+        callback: (() -> Unit)?
+    ) {
+        val users = getUserList()
+        if (users.isEmpty()) {
+            return
+        }
+        val index = getActiveIndex()
+        val items = Array<CharSequence>(users.size) { i -> users[i].nickName }
+
+        val dialogBuilder = AlertDialog.Builder(context)
+        dialogBuilder.setSingleChoiceItems(
+            items, index
+        ) { dialog, which ->
+            run {
+                setActiveIndex(which)
+                ToastUtils.info(
+                    "切换账户成功,当前账户名:" + items[index]
+                )
+                dialog.dismiss()
+                callback?.invoke()
+            }
+        }.setTitle("切换账号")
+        dialogBuilder.show()
+    }
+
+    override fun addUser(uid: String, cid: String, name: String) {
+        val user = User()
+        user.setCid(cid)
+        user.setUserId(uid)
+        user.setNickName(name)
         addUser(user)
     }
 
@@ -116,6 +161,7 @@ object UserManager {
             activeUser = null
             activeIndex = 0
             activeIndexLiveData.value = 0
+            _accountState.value = 0
             PreferenceUtils.putData(PreferenceKey.USER_ACTIVE_INDEX, activeIndex)
         } else {
             setActiveIndex(activeIndex)
@@ -162,4 +208,23 @@ object UserManager {
         }
     }
 
+    override fun init(context: Context?) = Unit
+
+}
+
+@Route(path = IUserManagerService.ROUTER_PATH)
+class UserManagerService : IUserManagerService {
+
+    override val activeAccountIndexState: StateFlow<Int>
+        get() = UserManager.activeAccountIndexState
+
+    override fun showUserSwitchDialog(context: Context, callback: (() -> Unit)?) {
+        UserManager.showUserSwitchDialog(context, callback)
+    }
+
+    override fun addUser(uid: String, cid: String, name: String) {
+        UserManager.addUser(uid, cid, name)
+    }
+
+    override fun init(context: Context?) = Unit
 }
