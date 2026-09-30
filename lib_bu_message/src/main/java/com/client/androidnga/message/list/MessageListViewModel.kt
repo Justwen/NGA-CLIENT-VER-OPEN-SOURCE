@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.onStart
 class MessageListViewModel : ViewModel() {
     private val accountManager = ARouter.getInstance().navigation(IUserManagerService::class.java)
 
-    private val repository = MessageRepository()
+    private val repository = MessageListRepository()
     @OptIn(ExperimentalCoroutinesApi::class)
     val messageListData = accountManager.activeAccountIndexState.flatMapLatest {
         repository.getMessageListData().onStart { emit(PagingData.empty()) }

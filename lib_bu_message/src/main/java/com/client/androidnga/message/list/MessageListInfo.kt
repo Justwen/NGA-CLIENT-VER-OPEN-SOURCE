@@ -11,7 +11,7 @@ class MessageListInfo {
 }
 
 class MessageListItem : JavaBean {
-    var mid: Int = 0
+    var mid: String = ""
 
     var subject: String = ""
 

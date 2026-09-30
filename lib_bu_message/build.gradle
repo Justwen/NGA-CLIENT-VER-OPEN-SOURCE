@@ -67,6 +67,5 @@ dependencies {
     implementation project(':lib_base_network')
     implementation project(':lib_base_ui_compose')
     implementation project(':lib_base_service_api')
-    implementation project(':lib_core_data')
 
 }

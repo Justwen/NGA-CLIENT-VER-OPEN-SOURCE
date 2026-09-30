@@ -25,7 +25,7 @@ import com.justwen.androidnga.ui.compose.widget.PullRefreshColumn
 @Composable
 fun MessageListScreen(
     viewModel: MessageListViewModel,
-    onMessageClick: (mid : Int) -> Unit,
+    onMessageClick: (mid: String, subject: String, recipient: String) -> Unit,
 ) {
     val items = viewModel.messageListData.collectAsLazyPagingItems()
     MessageListContent(items, onMessageClick)
@@ -34,7 +34,7 @@ fun MessageListScreen(
 @Composable
 private fun MessageListContent(
     items: LazyPagingItems<MessageListItem>,
-    onMessageClick: (mid : Int) -> Unit,
+    onMessageClick: (mid: String, subject: String, recipient: String) -> Unit,
 ) {
     PullRefreshColumn(
         columnItem = { MessageListRow(messageInfo = it, onMessageClick = onMessageClick) },
@@ -46,13 +46,19 @@ private fun MessageListContent(
 @Composable
 private fun MessageListRow(
     messageInfo: MessageListItem = MessageListItem(),
-    onMessageClick: (mid : Int) -> Unit = {},
+    onMessageClick: ((mid: String, subject: String, recipient: String) -> Unit)? = null,
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onMessageClick(messageInfo.mid) }
+            .clickable {
+                onMessageClick?.invoke(
+                    messageInfo.mid,
+                    messageInfo.subject,
+                    messageInfo.fromUsername
+                )
+            }
             .padding(16.dp)
     ) {
         Image(

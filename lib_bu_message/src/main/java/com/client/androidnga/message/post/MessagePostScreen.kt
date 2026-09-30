@@ -27,12 +27,14 @@ fun MessageInputField(
     value: String,
     hint: String,
     singleLine: Boolean = true,
+    enabled: Boolean = true,
     onValueChange: (String) -> Unit,
 ) {
     TextField(
         modifier = modifier,
         singleLine = singleLine,
         value = value,
+        enabled = enabled,
         colors = TextFieldDefaults.textFieldColors(backgroundColor = Color.White),
         onValueChange = {
             onValueChange(it)
@@ -50,19 +52,18 @@ fun MessagePostScreen(
             start = 16.dp, end = 16.dp, top = 16.dp, bottom = 16.dp
         )
     ) {
-        if (uiState.isNewPostMode()) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp),
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp),
+        ) {
+            MessageInputField(
+                value = uiState.recipient,
+                hint = "输入ID/用户名",
+                enabled = uiState.isNewPostMode(),
+                modifier = Modifier.fillMaxWidth()
             ) {
-                MessageInputField(
-                    value = uiState.recipient,
-                    hint = "输入ID/用户名",
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    viewModel?.updateRecipient(it)
-                }
+                viewModel?.updateRecipient(it)
             }
         }
         MessageInputField(

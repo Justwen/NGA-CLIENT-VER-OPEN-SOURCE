@@ -38,14 +38,14 @@ class MessageListActivity : BaseComposeActivity() {
 
     @Composable
     override fun ContentView() {
-        MessageListScreen(viewModel) {
-            startMessageDetail(it)
-        }
+        MessageListScreen(viewModel, onMessageClick = ::startMessageDetail)
     }
 
-    private fun startMessageDetail(mid : Int) {
+    private fun startMessageDetail(mid: String, subject: String, recipient: String) {
         ARouter.getInstance().build(ARouterConstants.ACTIVITY_MESSAGE_DETAIL)
-            .withInt("mid", mid)
+            .withString("mid", mid)
+            .withString("subject", subject)
+            .withString("recipient", recipient)
             .navigation(this)
     }
 

@@ -82,7 +82,7 @@ private data class MessageListBean(
     val last_from: Int = 0,
     val last_from_username: String = "",
     val last_modify: String = "",
-    val mid: Int = 0,
+    val mid: String = "",
     val posts: Int = 0,
     val sbit: Int = 0,
     val subject: String = "",

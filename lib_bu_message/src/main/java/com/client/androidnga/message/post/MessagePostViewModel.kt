@@ -26,7 +26,7 @@ class MessagePostViewModel : ViewModel() {
     private val _postEvent = Channel<Result<String>>(Channel.BUFFERED)
     val postEvent = _postEvent.receiveAsFlow()
 
-    private var isInitialized = false;
+    private var isInitialized = false
 
     companion object {
         private const val MIN_CONTENT_LENGTH = 6
@@ -40,7 +40,7 @@ class MessagePostViewModel : ViewModel() {
         isInitialized = true
         _uiState.value = MessagePostUiState(
             mode = intent.getStringExtra("action") ?: "new",
-            mid = intent.getIntExtra("mid", 0),
+            mid = intent.getStringExtra("mid") ?: "",
             recipient = intent.getStringExtra("to") ?: "",
             subject = intent.getStringExtra("title") ?: "",
         )
@@ -123,7 +123,7 @@ class MessagePostViewModel : ViewModel() {
 
 data class MessagePostUiState(
     val mode: String = "new",
-    val mid: Int = 0,
+    val mid: String = "",
     val subject: String = "",
     val content: String = "",
     val recipient: String = "",

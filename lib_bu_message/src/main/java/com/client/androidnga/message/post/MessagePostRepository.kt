@@ -32,7 +32,7 @@ class MessagePostRepository {
 
         val fieldParamMap = HashMap(queryParamMap)
 
-        fieldParamMap["mid"] = data.mid.toString()
+        fieldParamMap["mid"] = data.mid
         val recipient = data.recipient.replace("，".toRegex(), ",");
         fieldParamMap["to"] = URLEncoder.encode(recipient, "gbk")
         if (data.subject.isNotEmpty()) {

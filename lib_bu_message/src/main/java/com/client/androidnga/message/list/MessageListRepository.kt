@@ -10,7 +10,7 @@ import com.justwen.androidnga.base.network.retrofit.RetrofitServiceKt
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.Flow
 
-class MessageRepository {
+class MessageListRepository {
 
     fun getMessageListData(): Flow<PagingData<MessageListItem>> {
         return Pager(
