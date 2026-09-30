@@ -299,7 +299,7 @@ public class ImageUtils {
     public static void loadRoundCornerAvatar(ImageView imageView, String url, boolean onlyRetrieveFromCache) {
         Context context = ContextUtils.getContext();
         if (sDefaultAvatar == null) {
-            Bitmap defaultAvatar = BitmapFactory.decodeResource(context.getResources(), com.justwen.androidnga.module.message.R.drawable.default_avatar);
+            Bitmap defaultAvatar = BitmapFactory.decodeResource(context.getResources(), R.drawable.default_avatar);
             sDefaultAvatar = new BitmapDrawable(context.getResources(), ImageUtils.toRoundCorner(defaultAvatar, 2));
         }
         GlideApp.with(ContextUtils.getContext())
@@ -323,7 +323,7 @@ public class ImageUtils {
     public static void loadAvatar(ImageView imageView, String url) {
         Context context = ContextUtils.getContext();
         if (sDefaultAvatar == null) {
-            Bitmap defaultAvatar = BitmapFactory.decodeResource(context.getResources(), com.justwen.androidnga.module.message.R.drawable.default_avatar);
+            Bitmap defaultAvatar = BitmapFactory.decodeResource(context.getResources(), com.client.androidnga.message.R.drawable.default_avatar);
             sDefaultAvatar = new BitmapDrawable(context.getResources(), ImageUtils.toRoundCorner(defaultAvatar, 2));
         }
         GlideApp.with(ContextUtils.getContext())

@@ -4,6 +4,7 @@ import android.util.Pair;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
+import com.client.androidnga.message.R;
 import com.justwen.androidnga.core.data.MessageArticlePageInfo;
 import com.justwen.androidnga.core.data.MessageDetailInfo;
 

@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.justwen.androidnga.module.message.R
+import com.client.androidnga.message.R
 import com.justwen.androidnga.ui.compose.widget.PullRefreshColumn
 
 @Composable

@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace 'com.justwen.androidnga.module.message'
+    namespace 'com.client.androidnga.message'
     compileSdk project.compileSdkVersion
 
     defaultConfig {
