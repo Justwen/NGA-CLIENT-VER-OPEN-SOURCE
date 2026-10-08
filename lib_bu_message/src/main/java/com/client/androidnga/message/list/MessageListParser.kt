@@ -1,26 +1,29 @@
 package com.client.androidnga.message.list
 
+import com.alibaba.fastjson2.JSONException
 import com.alibaba.fastjson2.JSONObject
+import com.client.androidnga.base.network.ApiResult
+import com.client.androidnga.base.network.BusinessException
 import gov.anzong.androidnga.base.util.StringUtils
 import gov.anzong.androidnga.common.base.JavaBean
 
 class MessageListParser {
 
-    fun parse(js: String?): Result<MessageListInfo> {
+    fun parse(js: String?): ApiResult<MessageListInfo> {
         if (js.isNullOrEmpty()) {
-            return Result.failure(Exception("网络错误,响应内容为空"))
+            return ApiResult.failure(Exception("网络错误,响应内容为空"))
         }
         val result = js.removePrefix("window.script_muti_get_var_store=")
         return try {
             parseInternal(result)
         } catch (e: Exception) {
-            Result.failure(Exception("消息列表解析失败", e))
+            ApiResult.failure(Exception("消息列表解析失败", e))
         }
     }
 
-    private fun parseInternal(result: String): Result<MessageListInfo> {
+    private fun parseInternal(result: String): ApiResult<MessageListInfo>  {
         val obj: JSONObject =
-            JSONObject.parseObject(result) ?: return Result.failure(Exception("数据格式错误"))
+            JSONObject.parseObject(result) ?: return ApiResult.failure(JSONException("数据格式错误"))
 
         val dataObj = obj.getJSONObject("data")?.getJSONObject("0")
         dataObj?.let {
@@ -38,16 +41,16 @@ class MessageListParser {
                 i++
                 rowObj = it.getJSONObject(i.toString())
             }
-            return Result.success(messageInfo)
+            return ApiResult.success(messageInfo)
         }
         val errorObj = obj.getJSONObject("error")
         errorObj?.let {
             val errorStr = it.getString("0")
             if (!errorStr.isNullOrEmpty()) {
-                return Result.failure(Exception(errorStr))
+                return ApiResult.failure(BusinessException(message = errorStr))
             }
         }
-        return Result.failure(Exception("未知错误"))
+        return ApiResult.failure(Exception("未知错误"))
     }
 
     private fun parseMessageListItem(rowObj: JSONObject): MessageListItem? {

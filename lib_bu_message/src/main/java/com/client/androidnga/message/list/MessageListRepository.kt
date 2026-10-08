@@ -5,9 +5,9 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.client.androidnga.base.network.apiSafeCall
 import com.justwen.androidnga.base.network.retrofit.RetrofitHelper
 import com.justwen.androidnga.base.network.retrofit.RetrofitServiceKt
-import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.Flow
 
 class MessageListRepository {
@@ -34,23 +34,18 @@ class MessagePagingSource : PagingSource<Int, MessageListItem>() {
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MessageListItem> {
-        try {
-            val page = params.key ?: 1
-            val preKey = if (page > 1) page - 1 else null
-            paramMap["page"] = page.toString()
-            val jsonString = netService.getString(paramMap)
-            val factory = MessageListParser()
-            var nextKey: Int?
-            val result = factory.parse(jsonString)
-            result.getOrThrow().let {
-                nextKey = if (it.nextPage > 0) page + 1 else null
-                return LoadResult.Page(it.messageItemList, preKey, nextKey)
-            }
-        } catch (e: CancellationException) {
-            throw e
-        } catch (e: Exception) {
-            return LoadResult.Error(e)
+        val page = params.key ?: 1
+        val preKey = if (page > 1) page - 1 else null
+        val requestParams = HashMap(paramMap).apply {
+            this["page"] = page.toString()
         }
+        val result = apiSafeCall(
+            request = { netService.getString(requestParams) },
+            convert = { MessageListParser().parse(it) })
+        return result.data?.let {
+            val nextKey = if (it.nextPage > 0) page + 1 else null
+            LoadResult.Page(it.messageItemList, preKey, nextKey)
+        } ?: return LoadResult.Error(result.error?.cause ?: Throwable())
 
     }
 

@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.text.TextUtils;
 import android.webkit.WebSettings;
 
-import com.justwen.androidnga.base.network.retrofit.converter.JsonStringConvertFactory;
+import com.client.androidnga.base.network.retrofit.JsonStringConvertFactory;
 
 import java.net.URLDecoder;
 
@@ -94,7 +94,7 @@ public class RetrofitHelper {
         }
         return new Retrofit.Builder()
                 .baseUrl(baseUrl)
-                .addConverterFactory(JsonStringConvertFactory.create())
+                .addConverterFactory(JsonStringConvertFactory.INSTANCE)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(builder.build())
                 .build();
@@ -167,7 +167,7 @@ public class RetrofitHelper {
     public static RetrofitService getDefault() {
         return new Retrofit.Builder()
                 .baseUrl(URL_NGA_BASE_CC)
-                .addConverterFactory(JsonStringConvertFactory.create())
+                .addConverterFactory(JsonStringConvertFactory.INSTANCE)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
                 .create(RetrofitService.class);
