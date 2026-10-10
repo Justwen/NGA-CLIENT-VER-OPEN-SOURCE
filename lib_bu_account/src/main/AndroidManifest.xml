@@ -6,6 +6,11 @@
             android:name="com.justwent.androidnga.bu.login.LoginActivity"
             android:exported="false"
             android:label="登录" />
+
+        <activity
+            android:name=".profile.ProfileActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

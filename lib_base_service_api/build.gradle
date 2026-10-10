@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'com.justwen.androidnga.base.service.api'
+    namespace 'com.client.androidnga.base.api'
     compileSdk project.compileSdkVersion
 
     defaultConfig {

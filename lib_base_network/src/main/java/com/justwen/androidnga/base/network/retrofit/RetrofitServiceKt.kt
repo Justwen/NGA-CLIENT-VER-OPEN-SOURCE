@@ -14,6 +14,9 @@ interface RetrofitServiceKt {
     @GET("nuke.php")
     suspend fun getString(@QueryMap map: Map<String, String>): String
 
+    @GET("nuke.php")
+    suspend fun getStringEncoded(@QueryMap(encoded = true) map: Map<String, String>): String
+
     @GET
     suspend fun getString(@Url url: String): String
 

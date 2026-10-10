@@ -16,4 +16,6 @@ interface IUserManagerService : IProvider {
 
     fun addUser(uid: String, cid: String, name: String)
 
+    fun isActiveAccount(uid: String, name: String = "") : Boolean
+
 }

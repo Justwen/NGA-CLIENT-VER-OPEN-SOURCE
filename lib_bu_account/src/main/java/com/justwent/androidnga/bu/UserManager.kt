@@ -146,6 +146,10 @@ object UserManager : IUserManagerService {
         addUser(user)
     }
 
+    override fun isActiveAccount(uid: String, name: String): Boolean {
+        TODO("Not yet implemented")
+    }
+
     fun removeUser(index: Int) {
         val userList = userListLiveData.value!!.toMutableList()
         val user = userList.removeAt(index)
@@ -224,6 +228,12 @@ class UserManagerService : IUserManagerService {
 
     override fun addUser(uid: String, cid: String, name: String) {
         UserManager.addUser(uid, cid, name)
+    }
+
+    override fun isActiveAccount(uid: String, name: String): Boolean {
+        return UserManager.getActiveUser()?.let {
+            it.userId == uid
+        } ?: return false
     }
 
     override fun init(context: Context?) = Unit

@@ -32,8 +32,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.alibaba.android.arouter.launcher.ARouter
+import com.client.androidnga.account.R
 import com.justwen.androidnga.base.activity.ARouterConstants
-import com.justwen.androidnga.module.account.R
 import com.justwen.androidnga.ui.compose.BaseComposeFragment
 import com.justwent.androidnga.bu.UserManager
 import sp.phone.common.User

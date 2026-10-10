@@ -5,6 +5,7 @@ kotlin-coroutines = "1.10.2"
 fastjson2 = "2.0.59.android8"
 fastjson2-kotlin = "2.0.21.android"
 annotation = "1.10.0"
+material3 = "1.4.0"
 
 [plugins]
 # kotlin
@@ -25,3 +26,4 @@ gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
 fastjson2 = { group = "com.alibaba.fastjson2", name = "fastjson2", version.ref = "fastjson2" }
 fastjson2-kotlin = { group = "com.alibaba.fastjson2", name = "fastjson2-kotlin", version.ref = "fastjson2-kotlin" }
 annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotation" }
+material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }

@@ -5,7 +5,7 @@ package gov.anzong.androidnga.arouter;
  */
 public class ARouterConstants {
 
-    public static final String ACTIVITY_PROFILE = "/activity/profile";
+    public static final String ACTIVITY_PROFILE = com.justwen.androidnga.base.activity.ARouterConstants.ACTIVITY_PROFILE;
 
     public static final String ACTIVITY_LOGIN = com.justwen.androidnga.base.activity.ARouterConstants.ACTIVITY_LOGIN;
 
@@ -15,7 +15,7 @@ public class ARouterConstants {
 
     public static final String ACTIVITY_TOPIC_CONTENT = "/activity/topic_content";
 
-    public static final String ACTIVITY_TOPIC_LIST = "/activity/topic_list";
+    public static final String ACTIVITY_TOPIC_LIST = com.justwen.androidnga.base.activity.ARouterConstants.ACTIVITY_THREAD_LIST;
 
     public static final String ACTIVITY_SEARCH = "/activity/search";
 

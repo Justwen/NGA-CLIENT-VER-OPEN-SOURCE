@@ -1,12 +1,15 @@
 package gov.anzong.androidnga.activity.compose.filter
 
+import android.content.Context
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.fastjson2.JSON
+import com.client.androidnga.base.api.service.IFilterManagerService
 import gov.anzong.androidnga.base.kv.DataStore
 import gov.anzong.androidnga.base.util.PreferenceUtils
 import sp.phone.common.User
 import com.client.androidnga.core.data.model.ThreadPageInfo
 
-object FilterManager {
+object FilterManager : IFilterManagerService {
 
     @Deprecated("错误的Key")
     private const val DEPRECATED_FILTER_USER_LIST = ""
@@ -55,7 +58,7 @@ object FilterManager {
         }
     }
 
-    fun addFilterUser(userName: String, uid: String) {
+    override fun addFilterUser(userName: String, uid: String) {
         addFilterUser(User(uid, userName))
     }
 
@@ -74,7 +77,7 @@ object FilterManager {
         }
     }
 
-    fun removeFilterUser(uid: String) {
+    override fun removeFilterUser(uid: String) {
         removeFilterUser(User(uid, ""))
     }
 
@@ -126,6 +129,34 @@ object FilterManager {
 
     fun filterTopic(threadPageList: MutableList<ThreadPageInfo>) {
         threadPageList.removeIf { filterUserByName(it.author) || filterWord(it.subject) }
+    }
+
+    override fun isFilterUser(uid: String): Boolean {
+        return filterUserById(uid)
+    }
+
+    override fun init(context: Context?) {
+    }
+
+}
+
+
+@Route(path = IFilterManagerService.ROUTER_PATH)
+class FilterManagerImpl : IFilterManagerService {
+
+    override fun isFilterUser(uid: String): Boolean {
+        return FilterManager.isFilterUser(uid)
+    }
+
+    override fun addFilterUser(uid: String, userName: String) {
+        FilterManager.addFilterUser(uid = uid, userName = userName)
+    }
+
+    override fun removeFilterUser(uid: String) {
+        FilterManager.removeFilterUser(uid)
+    }
+
+    override fun init(context: Context?) {
     }
 
 }

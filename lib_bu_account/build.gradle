@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace 'com.justwen.androidnga.module.account'
+    namespace 'com.client.androidnga.account'
     compileSdk project.compileSdkVersion
 
     defaultConfig {
@@ -44,6 +44,7 @@ android {
 
 dependencies {
     implementation project(':lib_base_common')
+    implementation libs.material3
     testImplementation 'junit:junit:4.13.2'
 
     implementation "com.alibaba:arouter-api:$arouter_version"
@@ -52,6 +53,11 @@ dependencies {
     implementation project(':lib_base_service_api')
 
     implementation project(':lib_base_ui_compose')
+
+    implementation project(':lib_base_network')
+
+    implementation project(':lib_core')
+    implementation project(':lib_core_data')
 
     // database
     implementation "androidx.room:room-runtime:$room_version"

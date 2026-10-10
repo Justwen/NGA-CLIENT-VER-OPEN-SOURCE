@@ -16,7 +16,7 @@ class MessageListActivity : BaseComposeActivity() {
         ViewModelProvider(this)[MessageListViewModel::class.java]
     }
 
-    override fun getOptionMenuData(): List<OptionMenuData>? {
+    override fun getOptionMenuData(): List<OptionMenuData> {
         val accountSwitch = OptionMenuData(title = "切换账号", action = {
             showAccountSwitchDialog()
         })

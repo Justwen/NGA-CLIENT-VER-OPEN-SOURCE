@@ -23,7 +23,7 @@ abstract class BaseComposeActivity : FragmentActivity() {
         buildContentView()
     }
 
-    fun buildContentView() {
+    open fun buildContentView() {
         setContent {
             AppTheme {
                 ScaffoldApp(
@@ -48,8 +48,8 @@ abstract class BaseComposeActivity : FragmentActivity() {
         return topAppBarData
     }
 
-    open fun getOptionMenuData(): List<OptionMenuData>? {
-        return null
+    open fun getOptionMenuData(): List<OptionMenuData> {
+        return emptyList()
     }
 
     open fun getFabClickAction(): (() -> Unit)? {
