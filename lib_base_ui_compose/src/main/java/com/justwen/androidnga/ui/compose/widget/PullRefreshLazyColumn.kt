@@ -52,7 +52,7 @@ fun <T : Any> LazyColumnEx(
         val count = lazyPagingItems.itemCount
         if (lazyPagingItems.loadState.refresh is LoadState.Loading && count == 0) {
             item {
-                CircularProgressIndicatorView()
+                CircularProgressIndicatorView(modifier = Modifier.height(LocalConfiguration.current.screenHeightDp.dp))
             }
         } else if (lazyPagingItems.loadState.hasError) {
             item {
@@ -82,11 +82,10 @@ fun DividerView() {
 
 @Preview
 @Composable
-fun CircularProgressIndicatorView(saying: String = StringUtils.getSaying()) {
+fun CircularProgressIndicatorView(modifier: Modifier = Modifier, saying: String = StringUtils.getSaying()) {
     Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(LocalConfiguration.current.screenHeightDp.dp),
+        modifier = modifier
+            .fillMaxWidth(),
         contentAlignment = Alignment.Center,
     ) {
         Column(

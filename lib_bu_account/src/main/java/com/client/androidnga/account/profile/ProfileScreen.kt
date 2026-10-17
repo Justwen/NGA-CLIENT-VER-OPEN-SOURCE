@@ -65,6 +65,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import coil.compose.AsyncImage
 import com.client.androidnga.account.R
+import com.justwen.androidnga.ui.compose.widget.CircularProgressIndicatorView
 import com.justwen.androidnga.ui.compose.widget.OptionActionMenu
 import com.justwen.androidnga.ui.compose.widget.OptionMenuData
 import gov.anzong.androidnga.common.view.WebViewEx
@@ -82,7 +83,7 @@ private fun getOptionMenuData(
     state: ProfileUiState = ProfileUiState(),
     action: (action: ProfileAction) -> Unit,
 ): List<OptionMenuData> {
-    if (!state.isDataAvailable) return emptyList()
+    if (state.isLoading || state.isError) return emptyList()
     return buildList {
         if (!state.isCurrentUser) {
             add(
@@ -230,22 +231,26 @@ fun ImageCollapsingToolbarScreen(
             }
         }
     ) { innerPadding ->
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            contentPadding = innerPadding,
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            item {
-                ProfileBasicContent(state)
-            }
-            item {
-                ProfileSignContent(state, action)
-            }
-            item {
-                ProfileBoardContent(state, action)
-            }
-            item {
-                ProfileReputationContent(state)
+        if (state.isLoading) {
+            CircularProgressIndicatorView(modifier = Modifier.padding(innerPadding))
+        } else {
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = innerPadding,
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                item {
+                    ProfileBasicContent(state)
+                }
+                item {
+                    ProfileSignContent(state, action)
+                }
+                item {
+                    ProfileBoardContent(state, action)
+                }
+                item {
+                    ProfileReputationContent(state)
+                }
             }
         }
     }

@@ -25,7 +25,7 @@ class ProfileViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
     private val repository = ProfileRepository()
 
     private val _uiState: MutableStateFlow<ProfileUiState> =
-        MutableStateFlow(ProfileUiState())
+        MutableStateFlow(ProfileUiState(isLoading = true))
     val uiState = _uiState.asStateFlow()
 
     private val _event = Channel<ProfileEvent>(Channel.BUFFERED)
@@ -50,7 +50,7 @@ class ProfileViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
             if (result.isSuccess()) {
                 _uiState.value = toUiState(result.data) ?: ProfileUiState()
             } else {
-                _uiState.value = ProfileUiState()
+                _uiState.value = ProfileUiState(isError = true)
                 toErrorEvent(result.error)?.let {
                     _event.trySend(it)
                 }
@@ -79,7 +79,6 @@ class ProfileViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
             if (item.muteTime > 0) StringUtils.timeStamp2Date1(item.muteTime.toString()) else ""
 
         return ProfileUiState(
-            isDataAvailable = true,
             userName = item.username,
             uid = uid,
             avatarUrl = item.avatar,

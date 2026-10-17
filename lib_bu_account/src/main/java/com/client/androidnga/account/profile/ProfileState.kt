@@ -4,7 +4,8 @@ import androidx.compose.runtime.Immutable
 
 @Immutable
 data class ProfileUiState(
-    val isDataAvailable: Boolean = false,
+    val isLoading: Boolean = false,
+    val isError: Boolean = false,
     val userName: String = "N/A",
     val uid: String = "0",
     val avatarUrl: String = "",
