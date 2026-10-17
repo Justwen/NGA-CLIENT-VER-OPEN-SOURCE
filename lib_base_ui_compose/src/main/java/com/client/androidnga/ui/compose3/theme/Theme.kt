@@ -6,10 +6,6 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import com.justwen.androidnga.ui.compose.theme.PrimaryBlack
-import com.justwen.androidnga.ui.compose.theme.PrimaryBrown
-import com.justwen.androidnga.ui.compose.theme.PrimaryGreen
-import com.justwen.androidnga.ui.compose.theme.PrimaryNight
 
 
 private val defaultLDarkColorScheme =
