@@ -299,7 +299,7 @@ public class ArticleListFragment extends BaseMvpFragment<ArticleListPresenter> i
         if (getActivity() != null && data != null) {
             viewModel.setReplyCount(data.totalRows);
         }
-        if (data != null && getActivity() != null && mRequestParam.title == null) {
+        if (data != null && data.pageInfo != null && getActivity() != null && mRequestParam.title == null) {
             getActivity().setTitle(data.pageInfo.getSubject());
         }
 

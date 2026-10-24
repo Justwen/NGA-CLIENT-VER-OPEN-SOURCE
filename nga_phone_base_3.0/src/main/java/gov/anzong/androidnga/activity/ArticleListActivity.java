@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager;
 import com.alibaba.android.arouter.facade.annotation.Route;
 
 import gov.anzong.androidnga.arouter.ARouterConstants;
+import gov.anzong.androidnga.common.util.StringsKt;
 import sp.phone.param.ArticleListParam;
 import sp.phone.param.ParamKey;
 import sp.phone.ui.fragment.ArticleSearchFragment;
@@ -51,7 +52,7 @@ public class ArticleListActivity extends BaseActivity {
         ArticleListParam param = null;
         if (url != null) {
             param = new ArticleListParam();
-            param.tid = StringUtils.getUrlParameter(url, "tid");
+            param.tid = StringsKt.getUrlIntValue(url, "tid");
             param.pid = StringUtils.getUrlParameter(url, "pid");
             param.authorId = StringUtils.getUrlParameter(url, "authorid");
             param.page = StringUtils.getUrlParameter(url, "page");
